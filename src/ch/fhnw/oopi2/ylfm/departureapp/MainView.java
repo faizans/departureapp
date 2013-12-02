@@ -6,14 +6,14 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class DepartureView extends JFrame {
+public class MainView extends JFrame {
 	private final DepartureModel model;
 	private final DepartureController controller;
 
 	// declaration of all elements
 	private JPanel panel;
 
-	public DepartureView(DepartureModel model, DepartureController controller) {
+	public MainView(DepartureModel model, DepartureController controller) {
 		super("Abfahrt Bahnhof Olten");
 		this.model = model;
 		this.controller = controller;

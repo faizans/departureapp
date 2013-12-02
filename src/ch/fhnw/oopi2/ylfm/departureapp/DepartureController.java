@@ -4,11 +4,11 @@ import javax.swing.SwingUtilities;
 
 public class DepartureController {
 	private final DepartureModel model;
-	private final DepartureView view;
+	private final MainView view;
 
 	public DepartureController(DepartureModel model) {
 		this.model = model;
-		this.view = new DepartureView(model, this);
+		this.view = new MainView(model, this);
 	}
 
 	// setSelectedDeparture(int selectedRow)
