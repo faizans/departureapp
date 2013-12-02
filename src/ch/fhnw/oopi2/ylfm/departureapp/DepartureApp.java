@@ -4,13 +4,11 @@ import com.alee.laf.WebLookAndFeel;
 
 public class DepartureApp {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		WebLookAndFeel.install();
-
-		System.out.println("teest");
+		final DepartureModel model = new DepartureModel();
+		final DepartureController controller = new DepartureController(model);
+		controller.initializeView(); // controller Aufruf zum start
 	}
 
 }
