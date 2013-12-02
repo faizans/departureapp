@@ -61,19 +61,12 @@ local.properties
 # External tool builders
 .externalToolBuilders/
 
-<<<<<<< Updated upstream
 ######################
 # IntelliJ IDEA
 ######################
 .idea
 *.iml
 out
-=======
-# intellij
-.idea
-*.iml
->>>>>>> Stashed changes
- 
 
 # Locally stored "Eclipse launch configurations"
 *.launch
