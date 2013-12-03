@@ -8,7 +8,7 @@ public class DepartureApp {
 		WebLookAndFeel.install();
 		final DepartureModel model = new DepartureModel();
 		final DepartureController controller = new DepartureController(model);
-		controller.initializeView(); // controller Aufruf zum start
+		controller.initializeView(); // controller Aufruf zum startdes guis
 	}
 
 }
