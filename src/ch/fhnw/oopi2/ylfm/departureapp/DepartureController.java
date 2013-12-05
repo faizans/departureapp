@@ -2,9 +2,7 @@ package ch.fhnw.oopi2.ylfm.departureapp;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class DepartureController {
     private final DepartureModel model;
@@ -12,6 +10,7 @@ public class DepartureController {
     private final ToolbarView toolbar;
     private final DetailView detail;
     private final TableView table;
+    private final JScrollPane tablePane;
 
     public DepartureController(DepartureModel model) {
         this.model = model;
@@ -19,6 +18,7 @@ public class DepartureController {
         this.toolbar = new ToolbarView(model, this);
         this.detail = new DetailView(model, this);
         this.table = new TableView(model, this);
+        this.tablePane = new JScrollPane(this.table);
     }
 
     public JTable getTableContent() {
@@ -35,7 +35,7 @@ public class DepartureController {
             public void run() {
                 mainview.createAndShow();
                 mainview.add(toolbar.createAndShow(), BorderLayout.PAGE_START);
-                JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, table.createAndShow(), detail
+                JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tablePane, detail
                         .createAndShow());
                 splitPane.setResizeWeight(0.9);
                 splitPane.setDividerLocation(0.5);

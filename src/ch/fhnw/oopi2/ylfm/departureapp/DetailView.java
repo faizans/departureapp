@@ -46,14 +46,14 @@ public class DetailView extends JPanel{
         lblRichtung = new JLabel("in Richtung", SwingConstants.LEFT);
         lblFahrt = new JLabel("Fahrt", SwingConstants.LEFT);
         lblGleis = new JLabel("Gleis", SwingConstants.LEFT);
-        lblVia = new JLabel("über", SwingConstants.LEFT);
+        lblVia = new JLabel("Ãœber", SwingConstants.LEFT);
         fldUhrzeit = new JTextField();
         fldRichtung = new JTextField();
         fldFahrt = new JTextField();
         fldGleis = new JTextField();
         areaVia = new JTextArea();
-        btnEin = new JButton("Fährt Ein");
-        btnAus = new JButton("Fährt Aus");
+        btnEin = new JButton("FÃ¤hrt Ein");
+        btnAus = new JButton("FÃ¤hrt Aus");
         btnFirstEntry = new JButton("erster Eintrag auf Abfahrtstafel");
     }
 
