@@ -40,16 +40,26 @@ public class DepartureModel extends DefaultTableModel implements Observable {
 
     @Override
     public int getRowCount() {
-        return 10;  //To change body of implemented methods use File | Settings | File Templates.
+        return 10;    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     @Override
     public int getColumnCount() {
-        return 10;  //To change body of implemented methods use File | Settings | File Templates.
+        return 10;    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public String getColumnName(int column) {
+        switch(column) {
+            case 0:
+                return "Row 1";
+            default:
+                return "no name";
+        }
+    }
+
+    @Override
+    public Object getValueAt(int row, int column) {
+        return super.getValueAt(row, column);    //To change body of overridden methods use File | Settings | File Templates.
     }
 }

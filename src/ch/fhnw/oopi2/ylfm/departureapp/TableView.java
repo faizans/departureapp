@@ -5,13 +5,13 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class TableView extends JTable {
+public class TableView {
     private final DepartureModel model;
     private final DepartureController controller;
 
     // declaration of all elements
-    private JScrollPane panel;
-    private JTable content;
+    private JScrollPane scrollPane;
+    private JTable table;
 
     public TableView(DepartureModel model, DepartureController controller) {
         super();
@@ -21,25 +21,21 @@ public class TableView extends JTable {
 
     public JScrollPane createAndShow() {
         initializeComponents();
-        JScrollPane panel = layoutComponents();
-        addEvents();
-        add(panel);
-        return panel;
+        return layoutComponents();
     }
 
     private void initializeComponents() {
         // initialization here
-        panel = new JScrollPane();
-        content = controller.getTableContent();
+        table = new JTable(model);
+        scrollPane = new JScrollPane(table);
     }
 
-    @SuppressWarnings("deprecation")
+    //@SuppressWarnings("deprecation")
     private JScrollPane layoutComponents() {
         // layout here
-        panel.setMinimumSize(new Dimension(300, 0));
-        panel.setPreferredSize(new Dimension(500, 0));
-        panel.add(content);
-        return panel;
+        scrollPane.setMinimumSize(new Dimension(300, 0));
+        scrollPane.setPreferredSize(new Dimension(500, 0));
+        return scrollPane;
     }
 
     private void addEvents() {

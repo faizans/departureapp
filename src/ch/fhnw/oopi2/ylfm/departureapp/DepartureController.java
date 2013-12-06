@@ -10,7 +10,6 @@ public class DepartureController {
     private final ToolbarView toolbar;
     private final DetailView detail;
     private final TableView table;
-    private final JScrollPane tablePane;
 
     public DepartureController(DepartureModel model) {
         this.model = model;
@@ -18,11 +17,10 @@ public class DepartureController {
         this.toolbar = new ToolbarView(model, this);
         this.detail = new DetailView(model, this);
         this.table = new TableView(model, this);
-        this.tablePane = new JScrollPane(this.table);
     }
 
     public JTable getTableContent() {
-        return new JTable();
+        return new JTable(this.model);
     }
 
     // setSelectedDeparture(int selectedRow)
@@ -35,7 +33,7 @@ public class DepartureController {
             public void run() {
                 mainview.createAndShow();
                 mainview.add(toolbar.createAndShow(), BorderLayout.PAGE_START);
-                JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tablePane, detail
+                JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, table.createAndShow(), detail
                         .createAndShow());
                 splitPane.setResizeWeight(0.9);
                 splitPane.setDividerLocation(0.5);

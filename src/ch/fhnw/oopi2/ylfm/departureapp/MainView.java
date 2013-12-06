@@ -1,27 +1,16 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-
-import programmierprojektYvesLauber.DepartureView;
 
 public class MainView extends JFrame {
     private final DepartureModel model;
     private final DepartureController controller;
 
     // declaration of all elements
-    private JFrame panel;
+    private JFrame frame;
 
     public MainView(DepartureModel model, DepartureController controller) {
         super("Abfahrt Bahnhof Olten");
@@ -31,25 +20,24 @@ public class MainView extends JFrame {
 
     public void createAndShow() {
         initializeComponents();
-        JFrame contents = layoutComponents();
         addEvents();
-        
+
         pack();
         setVisible(true);
     }
 
     private void initializeComponents() {
         // initialization here
-        panel = new JFrame();
+        frame = new JFrame();
     }
 
     private JFrame layoutComponents() {
         // layout here
-        panel.setLayout(new BorderLayout());
-        panel.setMinimumSize(new Dimension(200, 100));
-        panel.setMaximumSize(new Dimension(800, 500));
-        panel.setPreferredSize(new Dimension(500, 300));
-        return panel;
+        frame.setLayout(new BorderLayout());
+        frame.setMinimumSize(new Dimension(200, 100));
+        frame.setMaximumSize(new Dimension(800, 500));
+        frame.setPreferredSize(new Dimension(500, 300));
+        return frame;
     }
 
     private void addEvents() {
