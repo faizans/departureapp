@@ -12,11 +12,12 @@ public class DepartureModel extends DefaultTableModel implements Observable {
     private List<Departure> departureList = new ArrayList<>();
 
 	// departurelist and selected departure here
-    public void loadDataFromFile() {
-
+    public DefaultTableModel loadDataFromFile() {
+        return new FileAdapter();
     }
 
 	// getAllDepartures
+
 
 	// getSelected Departures
 

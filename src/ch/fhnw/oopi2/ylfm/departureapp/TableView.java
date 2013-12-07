@@ -26,7 +26,7 @@ public class TableView {
 
     private void initializeComponents() {
         // initialization here
-        table = new JTable(model);
+        table = new JTable(model.loadDataFromFile());
         scrollPane = new JScrollPane(table);
     }
 
