@@ -52,8 +52,8 @@ public class DetailView extends JPanel{
         fldFahrt = new JTextField();
         fldGleis = new JTextField();
         areaVia = new JTextArea();
-        btnEin = new JButton("FÃ¤hrt Ein");
-        btnAus = new JButton("FÃ¤hrt Aus");
+        btnEin = new JButton("Fährt Ein");
+        btnAus = new JButton("Fährt Aus");
         btnFirstEntry = new JButton("erster Eintrag auf Abfahrtstafel");
     }
 

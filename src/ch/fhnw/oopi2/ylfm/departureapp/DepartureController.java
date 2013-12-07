@@ -19,8 +19,8 @@ public class DepartureController {
         this.table = new TableView(model, this);
     }
 
-    public JTable getTableContent() {
-        return new JTable(this.model);
+    public JTable getAllDepartures() {
+        return new JTable(model.getAllDepartures());
     }
 
     // setSelectedDeparture(int selectedRow)

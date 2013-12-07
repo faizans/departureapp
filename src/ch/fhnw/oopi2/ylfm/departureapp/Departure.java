@@ -2,61 +2,43 @@ package ch.fhnw.oopi2.ylfm.departureapp;
 
 public class Departure {
 
-	// Uhrzeit;Fahrt;in Richtung;über;Gleis;Status
-	// 00:00;IC 747;Zürich HB;Olten 00:00 - Aarau 00:08 - Zürich HB 00:33;;
+    private String departureTime;
+    private String trip;
+    private String destination;
+    private String via;
+    private String track;
+    private String status;
 
-	private String departureTime;
-	private String trip;
-	private String destination;
-	private String via;
-	private String track;
-	private String status;
+    public Departure(String departureTime, String trip, String destination, String via, String track, String status){
+        this.departureTime = departureTime;
+        this.trip = trip;
+        this.destination = destination;
+        this.via = via;
+        this.track = track;
+        this.status = status;
+    }
+    
+    public String getTrip() {
+        return trip;
+    }
 
-	public String getTrip() {
-		return trip;
-	}
+    public String getTrack() {
+        return track;
+    }
 
-	public void setTrip(String trip) {
-		this.trip = trip;
-	}
+    public String getVia() {
+        return via;
+    }
 
-	public String getTrack() {
-		return track;
-	}
+    public String getDestination() {
+        return destination;
+    }
 
-	public void setTrack(String track) {
-		this.track = track;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public String getVia() {
-		return via;
-	}
-
-	public void setVia(String via) {
-		this.via = via;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getDepartureTime() {
-		return departureTime;
-	}
-
-	public void setDepartureTime(String departureTime) {
-		this.departureTime = departureTime;
-	}
+    public String getDepartureTime() {
+        return departureTime;
+    }
 }
