@@ -18,13 +18,21 @@ import java.util.Set;
 public class DepartureModel implements Observable {
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
+    private int selectedDeparture;
 
     // departurelist and selected departure here
     public DefaultTableModel getAllDepartures() {
         return new FileAdapter(departures);
     }
 
-    // getAllDepartures
+    public Departure getSelectedDeparture() {
+        return departures.get(selectedDeparture);
+    }
+
+    public void setSelectedDeparture(int i) {
+        this.selectedDeparture = i + 1;
+        notifyObservers();
+    }
 
     // getSelected Departures
 

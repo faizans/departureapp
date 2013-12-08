@@ -120,6 +120,11 @@ public class DetailView extends JPanel{
             @Override
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
+                fldUhrzeit.setText(controller.getSelectedDeparture(0));
+                fldRichtung.setText(controller.getSelectedDeparture(1));
+                fldFahrt.setText(controller.getSelectedDeparture(2)); 
+                fldGleis.setText(controller.getSelectedDeparture(3));
+                areaVia.setText(controller.getSelectedDeparture(4));
             }
         });
 

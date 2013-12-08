@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class TableView {
     private final DepartureModel model;
@@ -21,6 +23,7 @@ public class TableView {
 
     public JScrollPane createAndShow() {
         initializeComponents();
+        addEvents();
         return layoutComponents();
     }
 
@@ -30,7 +33,7 @@ public class TableView {
         scrollPane = new JScrollPane(table);
     }
 
-    //@SuppressWarnings("deprecation")
+    // @SuppressWarnings("deprecation")
     private JScrollPane layoutComponents() {
         // layout here
         scrollPane.setMinimumSize(new Dimension(300, 0));
@@ -43,6 +46,14 @@ public class TableView {
             @Override
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
+            }
+        });
+        // wenn in der Tabelle eine neue Zeile angewählt wird
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                System.err.println(table.getSelectedRow());
+                controller.setSelectedDeparture(table.getSelectedRow());
             }
         });
 

@@ -20,8 +20,8 @@ public class MainView extends JFrame {
 
     public void createAndShow() {
         initializeComponents();
+        frame = layoutComponents();
         addEvents();
-
         pack();
         setVisible(true);
     }

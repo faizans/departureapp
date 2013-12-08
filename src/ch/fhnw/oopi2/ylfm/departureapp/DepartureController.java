@@ -23,6 +23,16 @@ public class DepartureController {
         return new JTable(model.getAllDepartures());
     }
 
+    public String getSelectedDeparture(int i) {
+        Departure d = model.getSelectedDeparture();
+        String[] result = { d.getDepartureTime(), d.getDestination(), d.getTrip(), d.getTrack(), d.getVia() };
+        return result[i];
+    }
+    
+    public void setSelectedDeparture(int i){
+        model.setSelectedDeparture(i);
+    }
+
     // setSelectedDeparture(int selectedRow)
 
     // all controllers here
