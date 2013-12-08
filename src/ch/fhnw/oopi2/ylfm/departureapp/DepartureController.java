@@ -28,9 +28,16 @@ public class DepartureController {
         String[] result = { d.getDepartureTime(), d.getDestination(), d.getTrip(), d.getTrack(), d.getVia() };
         return result[i];
     }
-    
-    public void setSelectedDeparture(int i){
+
+    public void setSelectedDeparture(int i) {
         model.setSelectedDeparture(i);
+    }
+
+    public void editDeparture(String s, int i) {
+        // s = string to insert, i = position/value to be changed
+        String[] departure = new String[5];
+        departure[i] = s;
+        model.editDeparture(departure);
     }
 
     // setSelectedDeparture(int selectedRow)

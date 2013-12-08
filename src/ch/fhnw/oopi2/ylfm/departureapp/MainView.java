@@ -52,6 +52,12 @@ public class MainView extends JFrame {
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
             }
+
+            @Override
+            public void repaint(Observable model) {
+                // TODO Auto-generated method stub
+                
+            }
         });
 
         // all Events bundled with this view here

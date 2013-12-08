@@ -1,5 +1,6 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import java.io.BufferedReader;
@@ -34,6 +35,27 @@ public class DepartureModel implements Observable {
         notifyObservers();
     }
 
+    public void editDeparture(String[] s) {
+        // get current departure
+        Departure d = departures.get(selectedDeparture);
+        // change current departure
+        if (s[0] != null) {
+            d.setDepartureTime(s[0]);
+        } else if (s[1] != null) {
+            d.setDestination(s[1]);
+        } else if (s[2] != null) {
+            d.setTrip(s[2]);
+        } else if (s[3] != null) {
+            d.setTrack(s[3]);
+        } else if (s[4] != null) {
+            d.setVia(s[4]);
+        }
+        // save current departure
+        departures.set(selectedDeparture, d);
+        //repaint jtable by invoking repaint method
+        notifyObservers();
+    }
+
     // getSelected Departures
 
     // all Program Logic here...
@@ -51,6 +73,9 @@ public class DepartureModel implements Observable {
     private void notifyObservers() {
         for (Observer observer : observers) {
             observer.update(this);
+        }
+        for (Observer observer : observers) {
+            observer.repaint(this);
         }
     }
 

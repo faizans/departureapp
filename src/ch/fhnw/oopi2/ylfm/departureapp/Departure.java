@@ -9,7 +9,7 @@ public class Departure {
     private String track;
     private String status;
 
-    public Departure(String departureTime, String trip, String destination, String via, String track, String status){
+    public Departure(String departureTime, String trip, String destination, String via, String track, String status) {
         this.departureTime = departureTime;
         this.trip = trip;
         this.destination = destination;
@@ -17,7 +17,7 @@ public class Departure {
         this.track = track;
         this.status = status;
     }
-    
+
     public String getTrip() {
         return trip;
     }
@@ -40,5 +40,29 @@ public class Departure {
 
     public String getDepartureTime() {
         return departureTime;
+    }
+
+    public void setTrip(String s) {
+        this.trip = s;
+    }
+
+    public void setTrack(String s) {
+        this.track = s;
+    }
+
+    public void setVia(String s) {
+        this.via = s;
+    }
+
+    public void setDestination(String s) {
+        this.destination = s;
+    }
+
+    public void setStatus(String s) {
+        this.status = s;
+    }
+
+    public void setDepartureTime(String s) {
+        this.departureTime = s;
     }
 }

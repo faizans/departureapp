@@ -47,6 +47,10 @@ public class TableView {
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
             }
+
+            public void repaint(Observable m) {
+                table.updateUI();
+            }
         });
         // wenn in der Tabelle eine neue Zeile angewählt wird
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

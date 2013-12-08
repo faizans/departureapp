@@ -1,11 +1,13 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
+import javax.swing.SwingUtilities;
+
 import com.alee.laf.WebLookAndFeel;
 
 public class DepartureApp {
 
 	public static void main(String[] args) {
-		WebLookAndFeel.install();
+	    WebLookAndFeel.install();
 		final DepartureModel model = new DepartureModel();
 		final DepartureController controller = new DepartureController(model);
 		controller.initializeView(); // controller Aufruf zum startdes guis

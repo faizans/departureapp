@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,7 +48,7 @@ public class DetailView extends JPanel{
         lblRichtung = new JLabel("in Richtung", SwingConstants.LEFT);
         lblFahrt = new JLabel("Fahrt", SwingConstants.LEFT);
         lblGleis = new JLabel("Gleis", SwingConstants.LEFT);
-        lblVia = new JLabel("Ãœber", SwingConstants.LEFT);
+        lblVia = new JLabel("über", SwingConstants.LEFT);
         fldUhrzeit = new JTextField();
         fldRichtung = new JTextField();
         fldFahrt = new JTextField();
@@ -119,12 +121,114 @@ public class DetailView extends JPanel{
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
+                System.err.println("DetailView.update aufgerufen");
                 DepartureModel myModel = (DepartureModel) m;
                 fldUhrzeit.setText(controller.getSelectedDeparture(0));
                 fldRichtung.setText(controller.getSelectedDeparture(1));
                 fldFahrt.setText(controller.getSelectedDeparture(2)); 
                 fldGleis.setText(controller.getSelectedDeparture(3));
                 areaVia.setText(controller.getSelectedDeparture(4));
+            }
+
+            @Override
+            public void repaint(Observable model) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        fldUhrzeit.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                // not used
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                System.err.println("view.keyReleased aufgerufen");
+                controller.editDeparture(fldUhrzeit.getText(), 0);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // not used
+
+            }
+        });
+        fldRichtung.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                // not used
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                System.err.println("view.keyReleased aufgerufen");
+                controller.editDeparture(fldRichtung.getText(), 1);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // not used
+
+            }
+        });
+        fldFahrt.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                // not used
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                System.err.println("view.keyReleased aufgerufen");
+                controller.editDeparture(fldFahrt.getText(), 2);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // not used
+
+            }
+        });
+        fldGleis.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                // not used
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                System.err.println("view.keyReleased aufgerufen");
+                controller.editDeparture(fldGleis.getText(), 3);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // not used
+
+            }
+        });
+        areaVia.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                // not used
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                System.err.println("view.keyReleased aufgerufen");
+                controller.editDeparture(areaVia.getText(), 4);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // not used
+
             }
         });
 
