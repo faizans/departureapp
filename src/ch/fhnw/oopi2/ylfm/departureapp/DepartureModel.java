@@ -67,7 +67,7 @@ public class DepartureModel implements Observable {
     
     public Integer[] searchDeparture(String s){
         //search functionality here
-        Integer[] departures = {5,6,7};
+        Integer[] departures = {5,33,100};
         return departures;
     }
 

@@ -10,17 +10,34 @@ public class DepartureController {
     private final ToolbarView toolbar;
     private final DetailView detail;
     private final TableView table;
-    //how often the same string got searched for
+    // how often the same string got searched for
     private int searchCounter = 0;
-    
-    public int getSearchCounter(){
+    private String previousSearch = "";
+    Integer[] searchResult;
+
+    public int getSearchCounter() {
         return searchCounter;
     }
     
-    public void resetSearchCounter(){
+    public int getIndexSelectedDeparture(){
+        return model.getIndexSelectedDeparture();
+    }
+    public String getPreviousSearch() {
+        return previousSearch;
+    }
+
+    public void setPreviousSearch(String s) {
+        this.previousSearch = s;
+    }
+
+    public void increaseSearchCounter() {
+        // array out of bounds exception abfangen durch kürzen des Arrays
+        this.searchCounter = (this.getSearchCounter() + 1) % searchResult.length;
+    }
+
+    public void resetSearchCounter() {
         this.searchCounter = 0;
     }
-    
 
     public DepartureController(DepartureModel model) {
         this.model = model;
@@ -34,18 +51,27 @@ public class DepartureController {
         return new JTable(model.getAllDepartures());
     }
 
-    public void searchDeparture(String s){
-        //überprüfung ob nochmals überprüft werden soll, etc.
-        
-        
-        resetSearchCounter();
-        Integer[] searchResult = model.searchDeparture(s);
-        model.setSearchedDeparture(searchResult[searchCounter++]);
-        
+    public void searchDeparture(String s) {
+        if (s.equals("")) {
+            System.out.println("empty string");
+        } else {
+            if (getPreviousSearch().equals(s)) {
+                // gleiche Suche wie vorher
+                System.out.println("gleiche Suche wie vorher");
+                increaseSearchCounter(); // suchindex erhöhen um 1
+                model.setSearchedDeparture(searchResult[getSearchCounter()]);
+            } else {
+                // neue Suche
+                resetSearchCounter();
+                searchResult = model.searchDeparture(s);
+                setPreviousSearch(s);
+                model.setSearchedDeparture(searchResult[getSearchCounter()]);
+            }
+        }
     }
-    
+
     public String getSelectedDeparture(int i) {
-        //returned values from selected Departure
+        // returned values from selected Departure
         Departure d = model.getSelectedDeparture();
         String[] result = { d.getDepartureTime(), d.getDestination(), d.getTrip(), d.getTrack(), d.getVia() };
         return result[i];
