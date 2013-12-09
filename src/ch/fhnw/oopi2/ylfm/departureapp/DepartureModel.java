@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class DepartureModel implements Observable {
     private final Set<Observer> observers = new HashSet<>();
@@ -29,8 +30,8 @@ public class DepartureModel implements Observable {
     public Departure getSelectedDeparture() {
         return departures.get(selectedDeparture);
     }
-    
-    public int getIndexSelectedDeparture(){
+
+    public int getIndexSelectedDeparture() {
         return this.selectedDeparture;
     }
 
@@ -38,8 +39,8 @@ public class DepartureModel implements Observable {
         this.selectedDeparture = i;
         notifyObservers();
     }
-    
-    public void setSearchedDeparture(int i){
+
+    public void setSearchedDeparture(int i) {
         this.selectedDeparture = i;
         searchResultObservers();
     }
@@ -61,14 +62,25 @@ public class DepartureModel implements Observable {
         }
         // save current departure
         departures.set(selectedDeparture, d);
-        //repaint jtable by invoking repaint method
+        // repaint jtable by invoking repaint method
         notifyRepaintObservers();
     }
-    
-    public Integer[] searchDeparture(String s){
-        //search functionality here
-        Integer[] departures = {5,33,100};
-        return departures;
+
+    public Integer[] searchDeparture(String s) {
+
+        Set<Integer> searchResult = new TreeSet<Integer>(); // TreeSet automatically eliminates
+                                                            // duplicates & sorts from smallest to
+                                                            // biggest
+        for (int i = 1; i < departures.size(); i++) {
+            Departure d = departures.get(i);
+            if (d.getDepartureTime().toString().contains(s) || d.getDestination().toString().contains(s)
+                    || d.getTrack().toString().contains(s) || d.getTrip().toString().contains(s)
+                    || d.getVia().toString().contains(s)) {
+                searchResult.add(i);
+            }
+        }
+        //return Array of searchResult
+        return searchResult.toArray(new Integer[searchResult.size()]);
     }
 
     // getSelected Departures
@@ -90,19 +102,18 @@ public class DepartureModel implements Observable {
             observer.update(this);
         }
     }
-    
+
     private void notifyRepaintObservers() {
         for (Observer observer : observers) {
             observer.repaint(this);
         }
     }
-    
+
     private void searchResultObservers() {
         for (Observer observer : observers) {
             observer.searchResult(this);
         }
     }
-    
 
     // gibt List der eingelesenen Departures aus.
     public List<Departure> createList() {

@@ -53,8 +53,9 @@ public class TableView {
             }
 
             public void searchResult(Observable m) {
-                table.setRowSelectionInterval(controller.getIndexSelectedDeparture()-1, controller.getIndexSelectedDeparture()-1);
-                table.scrollRectToVisible(table.getCellRect(controller.getIndexSelectedDeparture()-1, 0, true));
+                table.setRowSelectionInterval(controller.getIndexSelectedDeparture() - 1,
+                        controller.getIndexSelectedDeparture() - 1);
+                table.scrollRectToVisible(table.getCellRect(controller.getIndexSelectedDeparture() - 1, 0, true));
                 // afterwards scroll to visible includes %
 
             }
