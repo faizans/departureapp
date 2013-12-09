@@ -23,7 +23,7 @@ public class DepartureModel implements Observable {
     private int selectedDeparture;
 
     // departurelist and selected departure here
-    public DefaultTableModel getAllDepartures() {
+    public AbstractTableModel getAllDepartures() {
         return new FileAdapter(departures);
     }
 

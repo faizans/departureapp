@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileAdapter extends DefaultTableModel {
+public class FileAdapter extends AbstractTableModel {
 
     private List<Departure> departure;
     private int rowCount;
@@ -14,7 +14,12 @@ public class FileAdapter extends DefaultTableModel {
     public FileAdapter(List<Departure> departure) {
         this.departure = new ArrayList<Departure>(departure);
         // specify rowCount static to avoid too many calls on Arraylist.
-        rowCount = departure.size()-1;
+        rowCount = departure.size() - 1;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
     }
 
     @Override
@@ -32,41 +37,59 @@ public class FileAdapter extends DefaultTableModel {
         Departure firstRow = departure.get(0);
         String s = "";
         switch (column) {
-            case 0:
-                s= firstRow.getDepartureTime().toString();
-                break;
-            case 1:
-                s= firstRow.getTrip().toString();
-                break;
-            case 2:
-                s= firstRow.getDestination().toString();
-                break;
-            case 3:
-                s= "Status";
-                break;
+        case 0:
+            s = firstRow.getDepartureTime().toString();
+            break;
+        case 1:
+            s = firstRow.getTrip().toString();
+            break;
+        case 2:
+            s = firstRow.getDestination().toString();
+            break;
+        case 3:
+            s = "Status";
+            break;
         }
         return s;
     }
 
     @Override
     public Object getValueAt(int row, int column) {
-        Departure selectedRow = departure.get(row+1);
+        Departure selectedRow = departure.get(row + 1);
         String s = "";
         switch (column) {
-            case 0:
-                s= selectedRow.getDepartureTime().toString();
-                break;
-            case 1:
-                s= selectedRow.getTrip().toString();
-                break;
-            case 2:
-                s= selectedRow.getDestination().toString();
-                break;
-            case 3:
-                s= selectedRow.getStatus().toString();
-                break;
+        case 0:
+            s = selectedRow.getDepartureTime().toString();
+            break;
+        case 1:
+            s = selectedRow.getTrip().toString();
+            break;
+        case 2:
+            s = selectedRow.getDestination().toString();
+            break;
+        case 3:
+            s = selectedRow.getStatus().toString();
+            break;
         }
         return s;
     }
 
+    @Override
+    public void setValueAt(Object value, int row, int column) {
+        Departure selectedRow = departure.get(row + 1);
+        switch (column) {
+        case 0:
+            selectedRow.setDepartureTime(value.toString());
+            break;
+        case 1:
+            selectedRow.setTrip(value.toString());
+            break;
+        case 2:
+            selectedRow.setDestination(value.toString());
+            break;
+        case 3:
+            selectedRow.setStatus(value.toString());
+            break;
+        }
+    }
 }

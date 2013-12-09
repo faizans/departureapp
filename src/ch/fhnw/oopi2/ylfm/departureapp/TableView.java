@@ -70,28 +70,27 @@ public class TableView {
                 controller.setSelectedDeparture(table.getSelectedRow() + 1);
             }
         });
-        
         table.addKeyListener(new KeyListener() {
-            
-            @Override
-            public void keyTyped(KeyEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void keyReleased(KeyEvent e) {
-                System.out.println("Key Released in Table");
-                
-            }
-            
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
+            //TODO Add Refresh Table after table is edited.
 
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+        });
         // all Events bundled with this view here
 
     }
