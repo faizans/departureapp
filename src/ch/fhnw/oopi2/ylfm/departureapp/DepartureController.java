@@ -18,10 +18,11 @@ public class DepartureController {
     public int getSearchCounter() {
         return searchCounter;
     }
-    
-    public int getIndexSelectedDeparture(){
+
+    public int getIndexSelectedDeparture() {
         return model.getIndexSelectedDeparture();
     }
+
     public String getPreviousSearch() {
         return previousSearch;
     }
@@ -53,19 +54,22 @@ public class DepartureController {
 
     public void searchDeparture(String s) {
         if (s.equals("")) {
-            System.out.println("empty string");
+            // do nothing as search is empty
         } else {
             if (getPreviousSearch().equals(s)) {
                 // gleiche Suche wie vorher
-                System.out.println("gleiche Suche wie vorher");
                 increaseSearchCounter(); // suchindex erhöhen um 1
                 model.setSearchedDeparture(searchResult[getSearchCounter()]);
             } else {
                 // neue Suche
                 resetSearchCounter();
                 searchResult = model.searchDeparture(s);
-                setPreviousSearch(s);
-                model.setSearchedDeparture(searchResult[getSearchCounter()]);
+                try {
+                    model.setSearchedDeparture(searchResult[getSearchCounter()]);
+                    setPreviousSearch(s);
+                } catch (Exception e) {
+                    // do nothing, because s was not found within departures.
+                }
             }
         }
     }

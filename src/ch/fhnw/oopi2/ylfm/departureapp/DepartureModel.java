@@ -67,6 +67,8 @@ public class DepartureModel implements Observable {
     }
 
     public Integer[] searchDeparture(String s) {
+        //returns null, if s was not found within departures
+        Integer[] result;
         System.out.println(getIndexSelectedDeparture() + "Current Index to start searching");
         Set<Integer> searchResult = new TreeSet<Integer>(); // TreeSet automatically eliminates
                                                             // duplicates & sorts from smallest to
@@ -79,8 +81,13 @@ public class DepartureModel implements Observable {
                 searchResult.add(i);
             }
         }
+        try{
+            result = searchResult.toArray(new Integer[searchResult.size()]);
+        }catch(Exception e){
+            result = null; 
+        }
         // return Array of searchResult
-        return searchResult.toArray(new Integer[searchResult.size()]);
+        return result;
     }
 
     // getSelected Departures
