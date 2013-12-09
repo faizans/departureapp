@@ -29,10 +29,19 @@ public class DepartureModel implements Observable {
     public Departure getSelectedDeparture() {
         return departures.get(selectedDeparture);
     }
+    
+    public int getIndexSelectedDeparture(){
+        return this.selectedDeparture;
+    }
 
     public void setSelectedDeparture(int i) {
-        this.selectedDeparture = i + 1;
+        this.selectedDeparture = i;
         notifyObservers();
+    }
+    
+    public void setSearchedDeparture(int i){
+        this.selectedDeparture = i;
+        searchResultObservers();
     }
 
     public void editDeparture(String[] s) {
@@ -53,7 +62,13 @@ public class DepartureModel implements Observable {
         // save current departure
         departures.set(selectedDeparture, d);
         //repaint jtable by invoking repaint method
-        notifyObservers();
+        notifyRepaintObservers();
+    }
+    
+    public Integer[] searchDeparture(String s){
+        //search functionality here
+        Integer[] departures = {5,6,7};
+        return departures;
     }
 
     // getSelected Departures
@@ -74,10 +89,20 @@ public class DepartureModel implements Observable {
         for (Observer observer : observers) {
             observer.update(this);
         }
+    }
+    
+    private void notifyRepaintObservers() {
         for (Observer observer : observers) {
             observer.repaint(this);
         }
     }
+    
+    private void searchResultObservers() {
+        for (Observer observer : observers) {
+            observer.searchResult(this);
+        }
+    }
+    
 
     // gibt List der eingelesenen Departures aus.
     public List<Departure> createList() {

@@ -10,6 +10,17 @@ public class DepartureController {
     private final ToolbarView toolbar;
     private final DetailView detail;
     private final TableView table;
+    //how often the same string got searched for
+    private int searchCounter = 0;
+    
+    public int getSearchCounter(){
+        return searchCounter;
+    }
+    
+    public void resetSearchCounter(){
+        this.searchCounter = 0;
+    }
+    
 
     public DepartureController(DepartureModel model) {
         this.model = model;
@@ -23,7 +34,18 @@ public class DepartureController {
         return new JTable(model.getAllDepartures());
     }
 
+    public void searchDeparture(String s){
+        //überprüfung ob nochmals überprüft werden soll, etc.
+        
+        
+        resetSearchCounter();
+        Integer[] searchResult = model.searchDeparture(s);
+        model.setSearchedDeparture(searchResult[searchCounter++]);
+        
+    }
+    
     public String getSelectedDeparture(int i) {
+        //returned values from selected Departure
         Departure d = model.getSelectedDeparture();
         String[] result = { d.getDepartureTime(), d.getDestination(), d.getTrip(), d.getTrack(), d.getVia() };
         return result[i];

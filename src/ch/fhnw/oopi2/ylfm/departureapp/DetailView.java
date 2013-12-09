@@ -135,6 +135,12 @@ public class DetailView extends JPanel{
                 // TODO Auto-generated method stub
                 
             }
+
+            @Override
+            public void searchResult(Observable model) {
+                // TODO Auto-generated method stub
+                
+            }
         });
         fldUhrzeit.addKeyListener(new KeyListener() {
 

@@ -1,6 +1,8 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.swing.BorderFactory;
@@ -77,6 +79,19 @@ public class ToolbarView extends JToolBar {
             public void repaint(Observable model) {
                 // TODO Auto-generated method stub
                 
+            }
+
+            @Override
+            public void searchResult(Observable model) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        search.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.searchDeparture(search.getText());
             }
         });
 

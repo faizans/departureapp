@@ -19,13 +19,11 @@ public class FileAdapter extends DefaultTableModel {
 
     @Override
     public int getRowCount() {
-        System.out.println("getRowCount called");
         return rowCount;
     }
 
     @Override
     public int getColumnCount() {
-        System.out.println("getColumntCount called");
         return 4;
     }
 
@@ -52,7 +50,6 @@ public class FileAdapter extends DefaultTableModel {
 
     @Override
     public Object getValueAt(int row, int column) {
-        System.out.println("getValueAt called");
         Departure selectedRow = departure.get(row+1);
         String s = "";
         switch (column) {

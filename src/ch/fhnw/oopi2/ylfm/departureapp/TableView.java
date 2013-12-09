@@ -51,13 +51,20 @@ public class TableView {
             public void repaint(Observable m) {
                 table.updateUI();
             }
+
+            public void searchResult(Observable m) {
+                table.setRowSelectionInterval(model.getIndexSelectedDeparture(), model.getIndexSelectedDeparture());
+                table.scrollRectToVisible(table.getCellRect(controller.getSearchCounter(), 0, true));
+                // afterwards scroll to visible includes %
+
+            }
         });
         // wenn in der Tabelle eine neue Zeile angewählt wird
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 System.err.println(table.getSelectedRow());
-                controller.setSelectedDeparture(table.getSelectedRow());
+                controller.setSelectedDeparture(table.getSelectedRow() + 1);
             }
         });
 
