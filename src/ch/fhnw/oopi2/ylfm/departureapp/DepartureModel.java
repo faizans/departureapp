@@ -67,11 +67,11 @@ public class DepartureModel implements Observable {
     }
 
     public Integer[] searchDeparture(String s) {
-
+        System.out.println(getIndexSelectedDeparture() + "Current Index to start searching");
         Set<Integer> searchResult = new TreeSet<Integer>(); // TreeSet automatically eliminates
                                                             // duplicates & sorts from smallest to
                                                             // biggest
-        for (int i = 1; i < departures.size(); i++) {
+        for (int i = getIndexSelectedDeparture(); i < departures.size(); i++) {
             Departure d = departures.get(i);
             if (d.getDepartureTime().toString().contains(s) || d.getDestination().toString().contains(s)
                     || d.getTrack().toString().contains(s) || d.getTrip().toString().contains(s)
@@ -79,7 +79,7 @@ public class DepartureModel implements Observable {
                 searchResult.add(i);
             }
         }
-        //return Array of searchResult
+        // return Array of searchResult
         return searchResult.toArray(new Integer[searchResult.size()]);
     }
 
