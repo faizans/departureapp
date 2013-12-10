@@ -88,8 +88,9 @@ public class DepartureController {
     }
 
     public void editDeparture(String property, String newValue) {
-        if(model.getSelectedDeparture().getProperty(property).toString().equals(newValue)){
-            //if the property was not changed, nothing happens.
+        System.out.println();
+        if(model.getIndexSelectedDeparture() == -1 || model.getSelectedDeparture().getProperty(property).toString().equals(newValue)){
+            //when no row is selected or the value has not changed
         } else{
             model.editDeparture(property, newValue);
         }

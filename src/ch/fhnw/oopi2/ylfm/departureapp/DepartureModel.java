@@ -26,7 +26,7 @@ import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
 public class DepartureModel implements Observable {
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
-    private int selectedDeparture;
+    private int selectedDeparture = -1;
 
     // getters
     public AbstractTableModel getAllDepartures() {
@@ -38,7 +38,13 @@ public class DepartureModel implements Observable {
     }
 
     public Departure getSelectedDeparture() {
-        return departures.get(selectedDeparture);
+        try {
+            return departures.get(selectedDeparture);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     // setters
@@ -164,7 +170,7 @@ public class DepartureModel implements Observable {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return  (columnIndex == 3) ? false : true;
+            return (columnIndex == 3) ? false : true;
         }
 
         @Override
