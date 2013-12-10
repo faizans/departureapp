@@ -24,6 +24,7 @@ import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRIP_PROPERTY;
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
 
 public class DepartureModel implements Observable {
+    public static final String FILE_NAME = "olten.txt";
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
     private int selectedDeparture = -1;
@@ -152,7 +153,7 @@ public class DepartureModel implements Observable {
 
     private final File getFile() {
         final File file;
-        final URL resource = DepartureModel.class.getResource("olten.txt");
+        final URL resource = DepartureModel.class.getResource(FILE_NAME);
         file = new File(URLDecoder.decode(resource.getFile()));
         return file;
     }
