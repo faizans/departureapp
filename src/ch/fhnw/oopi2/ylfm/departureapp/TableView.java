@@ -47,7 +47,16 @@ public class TableView {
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
-                // DepartureModel myModel = (DepartureModel) m;
+                DepartureModel myModel = (DepartureModel) m;
+                //used for presenting Search Result
+                try{
+                    table.setRowSelectionInterval(myModel.getIndexSelectedDeparture() - 1,
+                            myModel.getIndexSelectedDeparture() - 1);
+                    table.scrollRectToVisible(table.getCellRect(myModel.getIndexSelectedDeparture() - 1, 0, true));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                
             }
 
             public void repaint(Observable m) {
@@ -65,7 +74,6 @@ public class TableView {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                System.err.println(table.getSelectedRow());
                 controller.setSelectedDeparture(table.getSelectedRow() + 1);
             }
         });

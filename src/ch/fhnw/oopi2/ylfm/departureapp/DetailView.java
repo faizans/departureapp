@@ -149,8 +149,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                System.err.println("view.keyReleased aufgerufen");
-                controller.editDeparture(fldUhrzeit.getText(), 0);
+                controller.editDeparture(0, fldUhrzeit.getText());
             }
 
             @Override
@@ -168,8 +167,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                System.err.println("view.keyReleased aufgerufen");
-                controller.editDeparture(fldRichtung.getText(), 1);
+                controller.editDeparture(2, fldRichtung.getText());
             }
 
             @Override
@@ -187,8 +185,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                System.err.println("view.keyReleased aufgerufen");
-                controller.editDeparture(fldFahrt.getText(), 2);
+                controller.editDeparture(1, fldFahrt.getText());
             }
 
             @Override
@@ -197,7 +194,7 @@ public class DetailView extends JPanel {
 
             }
         });
-        
+
         areaVia.addKeyListener(new KeyListener() {
 
             @Override
@@ -207,8 +204,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                System.err.println("view.keyReleased aufgerufen");
-                controller.editDeparture(areaVia.getText(), 4);
+                controller.editDeparture(4, areaVia.getText());
             }
 
             @Override

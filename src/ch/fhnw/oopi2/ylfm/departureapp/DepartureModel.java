@@ -1,7 +1,6 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,53 +21,54 @@ public class DepartureModel implements Observable {
     private List<Departure> departures = createList();
     private int selectedDeparture;
 
-    // departurelist and selected departure here
+    // getters
     public AbstractTableModel getAllDepartures() {
         return new FileAdapter(departures);
-    }
-
-    public Departure getSelectedDeparture() {
-        return departures.get(selectedDeparture);
     }
 
     public int getIndexSelectedDeparture() {
         return this.selectedDeparture;
     }
 
+    public Departure getSelectedDeparture() {
+        return departures.get(selectedDeparture);
+    }
+
+    // setters
     public void setSelectedDeparture(int i) {
         this.selectedDeparture = i;
-        System.out.println(departures.get(i).getDepartureTime());
         notifyObservers();
     }
 
-    public void updateDetailView() {
-        notifyObservers();
-    }
-
-    public void setSearchedDeparture(int i) {
-        this.selectedDeparture = i;
-        searchResultObservers();
-    }
-
-    public void editDeparture(String[] s) {
-        // get current departure
+    public void editDeparture(int column, String s) {
         Departure d = departures.get(selectedDeparture);
-        // change current departure
-        if (s[0] != null) {
-            d.setDepartureTime(s[0]);
-        } else if (s[1] != null) {
-            d.setDestination(s[1]);
-        } else if (s[2] != null) {
-            d.setTrip(s[2]);
-        } else if (s[3] != null) {
-            d.setTrack(s[3]);
-        } else if (s[4] != null) {
-            d.setVia(s[4]);
+        try {
+            switch (column) {
+            case 0:
+                d.setDepartureTime(s);
+                break;
+            case 1:
+                d.setTrip(s);
+                break;
+            case 2:
+                d.setDestination(s);
+                break;
+            case 3:
+                d.setVia(s);
+                break;
+            case 4:
+                d.setTrack(s);
+                break;
+            case 5:
+                d.setStatus(s);
+                break;
+            }
+            System.out.println("Edit Departure New");
+            notifyObservers();
+            notifyRepaintObservers();
+        } catch (Exception e) {
+            System.err.println("editDeparture out of bound.");
         }
-        // save current departure
-        departures.set(selectedDeparture, d);
-        // repaint jtable by invoking repaint method
-        notifyRepaintObservers();
     }
 
     public Integer[] searchDeparture(String s) {
@@ -94,10 +94,6 @@ public class DepartureModel implements Observable {
         // return Array of searchResult
         return result;
     }
-
-    // getSelected Departures
-
-    // all Program Logic here...
 
     @Override
     public void addObserver(Observer observer) {
@@ -163,7 +159,6 @@ public class DepartureModel implements Observable {
                 }
             }
         }
-        System.err.println("file read from disk. row count: " + departureList.size());
         return departureList;
     }
 
@@ -172,6 +167,82 @@ public class DepartureModel implements Observable {
         final URL resource = DepartureModel.class.getResource("olten.txt");
         file = new File(URLDecoder.decode(resource.getFile()));
         return file;
+    }
+
+    public class FileAdapter extends AbstractTableModel {
+
+        private List<Departure> departure;
+        private int rowCount;
+
+        public FileAdapter(List<Departure> departure) {
+            this.departure = new ArrayList<Departure>(departure);
+            // specify rowCount static to avoid too many calls on Arraylist.
+            rowCount = departure.size() - 1;
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return true;
+        }
+
+        @Override
+        public int getRowCount() {
+            return rowCount;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 4;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            Departure firstRow = departure.get(0);
+            String s = "";
+            switch (column) {
+            case 0:
+                s = firstRow.getDepartureTime().toString();
+                break;
+            case 1:
+                s = firstRow.getTrip().toString();
+                break;
+            case 2:
+                s = firstRow.getDestination().toString();
+                break;
+            case 3:
+                s = "Status";
+                break;
+            }
+            return s;
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            Departure selectedRow = departure.get(row + 1);
+            String s = "";
+            switch (column) {
+            case 0:
+                s = selectedRow.getDepartureTime().toString();
+                break;
+            case 1:
+                s = selectedRow.getTrip().toString();
+                break;
+            case 2:
+                s = selectedRow.getDestination().toString();
+                break;
+            case 3:
+                s = selectedRow.getStatus().toString();
+                break;
+            }
+            return s;
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int column) {
+            System.out.println("trying to change row: " + row);
+            DepartureModel.this.editDeparture(column, value.toString());
+        }
+
     }
 
 }

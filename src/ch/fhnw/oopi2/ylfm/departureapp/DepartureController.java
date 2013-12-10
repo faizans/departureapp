@@ -50,13 +50,9 @@ public class DepartureController {
         this.table = new TableView(model, this);
     }
 
-    // Question!!!! used to initialize table view
+    //getters QUESTION!!! does that comply with MVC-Pattern?
     public JTable getAllDepartures() {
         return new JTable(model.getAllDepartures());
-    }
-
-    public void updateDetailView() {
-        model.updateDetailView();
     }
 
     public void searchDeparture(String s) {
@@ -66,13 +62,13 @@ public class DepartureController {
             if (getPreviousSearch().equals(s)) {
                 // gleiche Suche wie vorher
                 increaseSearchCounter(); // suchindex erhöhen um 1
-                model.setSearchedDeparture(searchResult[getSearchCounter()]);
+                model.setSelectedDeparture(searchResult[getSearchCounter()]);
             } else {
                 // neue Suche
                 resetSearchCounter();
                 searchResult = model.searchDeparture(s);
                 try {
-                    model.setSearchedDeparture(searchResult[getSearchCounter()]);
+                    model.setSelectedDeparture(searchResult[getSearchCounter()]);
                     setPreviousSearch(s);
                 } catch (Exception e) {
                     // do nothing, because s was not found within departures.
@@ -86,21 +82,14 @@ public class DepartureController {
         if (model.getIndexSelectedDeparture() != i) {
             model.setSelectedDeparture(i);
         } else {
-            // nothing to change
+            // no changes to apply
         }
-        
+
     }
 
-    public void editDeparture(String s, int i) {
-        // s = string to insert, i = position/value to be changed
-        String[] departure = new String[5];
-        departure[i] = s;
-        model.editDeparture(departure);
+    public void editDeparture(int column, String s) {
+        model.editDeparture(column, s);
     }
-
-    // setSelectedDeparture(int selectedRow)
-
-    // all controllers here
 
     public void initializeView() {
         SwingUtilities.invokeLater(new Runnable() {
