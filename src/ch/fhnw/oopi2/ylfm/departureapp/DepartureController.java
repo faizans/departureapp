@@ -82,7 +82,13 @@ public class DepartureController {
     }
 
     public void setSelectedDeparture(int i) {
-        model.setSelectedDeparture(i);
+        // test ob geändert
+        if (model.getIndexSelectedDeparture() != i) {
+            model.setSelectedDeparture(i);
+        } else {
+            // nothing to change
+        }
+        
     }
 
     public void editDeparture(String s, int i) {
