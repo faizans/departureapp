@@ -39,6 +39,10 @@ public class DepartureModel implements Observable {
         this.selectedDeparture = i;
         notifyObservers();
     }
+    
+    public void updateDetailView(){
+        notifyObservers();
+    }
 
     public void setSearchedDeparture(int i) {
         this.selectedDeparture = i;

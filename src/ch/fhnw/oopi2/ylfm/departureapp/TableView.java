@@ -81,7 +81,8 @@ public class TableView {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-
+                System.out.println("key released... Detailview should get updated now");
+                controller.updateDetailView();
             }
 
             @Override

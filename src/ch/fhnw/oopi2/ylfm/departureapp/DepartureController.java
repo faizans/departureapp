@@ -51,7 +51,11 @@ public class DepartureController {
     public JTable getAllDepartures() {
         return new JTable(model.getAllDepartures());
     }
-
+    
+    public void updateDetailView(){
+        model.updateDetailView();
+    }
+    
     public void searchDeparture(String s) {
         if (s.equals("")) {
             // do nothing as search is empty
