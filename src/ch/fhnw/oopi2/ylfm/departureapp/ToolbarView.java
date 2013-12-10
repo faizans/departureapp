@@ -3,6 +3,8 @@ package ch.fhnw.oopi2.ylfm.departureapp;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.net.URL;
 
 import javax.swing.Box;
@@ -63,6 +65,7 @@ public class ToolbarView extends JToolBar {
         search.setMaximumSize(new Dimension(150, 28));
         search.setPreferredSize(new Dimension(150, 28));
         search.setMinimumSize(new Dimension(60, 28));
+        search.setText("Suche ...");
         toolbar.add(search);
         return toolbar;
     }
@@ -80,6 +83,27 @@ public class ToolbarView extends JToolBar {
                 
             }
         });
+        
+        search.addFocusListener(new FocusListener() {
+            
+            @Override
+            public void focusLost(FocusEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void focusGained(FocusEvent arg0) {
+                if(search.getText().equals("Suche ...")){
+                    search.setText("");
+                }else{
+                    controller.resetSearchCounter();
+                    search.selectAll();
+                }
+                
+            }
+        });
+        
         search.addActionListener(new ActionListener() {
             
             @Override

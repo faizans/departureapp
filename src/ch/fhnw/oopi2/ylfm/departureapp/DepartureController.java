@@ -50,7 +50,7 @@ public class DepartureController {
         this.table = new TableView(model, this);
     }
 
-    //getters QUESTION!!! does that comply with MVC-Pattern?
+    // getters QUESTION!!! does that comply with MVC-Pattern?
     public JTable getAllDepartures() {
         return new JTable(model.getAllDepartures());
     }
@@ -59,10 +59,10 @@ public class DepartureController {
         if (s.equals("")) {
             // do nothing as search is empty
         } else {
-            if (getPreviousSearch().equals(s)) {
+            if (getPreviousSearch().equals(s) && this.getSearchCounter() != 0) {
                 // gleiche Suche wie vorher
-                increaseSearchCounter(); // suchindex erhöhen um 1
                 model.setSelectedDeparture(searchResult[getSearchCounter()]);
+                increaseSearchCounter();
             } else {
                 // neue Suche
                 resetSearchCounter();
@@ -70,6 +70,7 @@ public class DepartureController {
                 try {
                     model.setSelectedDeparture(searchResult[getSearchCounter()]);
                     setPreviousSearch(s);
+                    increaseSearchCounter();
                 } catch (Exception e) {
                     // do nothing, because s was not found within departures.
                 }
@@ -89,12 +90,12 @@ public class DepartureController {
 
     public void editDeparture(String property, String newValue) {
         System.out.println();
-        if(model.getIndexSelectedDeparture() == -1 || model.getSelectedDeparture().getProperty(property).toString().equals(newValue)){
-            //when no row is selected or the value has not changed
-        } else{
+        if (model.getIndexSelectedDeparture() == -1
+                || model.getSelectedDeparture().getProperty(property).toString().equals(newValue)) {
+            // when no row is selected or the value has not changed
+        } else {
             model.editDeparture(property, newValue);
         }
-        
 
     }
 
