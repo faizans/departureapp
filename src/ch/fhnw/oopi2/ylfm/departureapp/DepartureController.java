@@ -32,11 +32,13 @@ public class DepartureController {
     }
 
     public void increaseSearchCounter() {
+        // locally used variable for search functionality
         // array out of bounds exception abfangen durch kürzen des Arrays
         this.searchCounter = (this.getSearchCounter() + 1) % searchResult.length;
     }
 
     public void resetSearchCounter() {
+        // locally used variable for search functionality
         this.searchCounter = 0;
     }
 

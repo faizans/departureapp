@@ -69,29 +69,7 @@ public class TableView {
                 controller.setSelectedDeparture(table.getSelectedRow() + 1);
             }
         });
-        table.addKeyListener(new KeyListener() {
-            // TODO Add Refresh Table after table is edited.
 
-            @Override
-            public void keyPressed(KeyEvent arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent arg0) {
-                System.out.println("key released... Detailview should get updated now");
-                // Question is this command MVC-compatible?, führt nur notifyobservers aus...
-                controller.updateDetailView();
-            }
-
-            @Override
-            public void keyTyped(KeyEvent arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-        });
         // all Events bundled with this view here
 
     }

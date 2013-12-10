@@ -37,10 +37,11 @@ public class DepartureModel implements Observable {
 
     public void setSelectedDeparture(int i) {
         this.selectedDeparture = i;
+        System.out.println(departures.get(i).getDepartureTime());
         notifyObservers();
     }
-    
-    public void updateDetailView(){
+
+    public void updateDetailView() {
         notifyObservers();
     }
 
@@ -71,7 +72,7 @@ public class DepartureModel implements Observable {
     }
 
     public Integer[] searchDeparture(String s) {
-        //returns null, if s was not found within departures
+        // returns null, if s was not found within departures
         Integer[] result;
         System.out.println(getIndexSelectedDeparture() + "Current Index to start searching");
         Set<Integer> searchResult = new TreeSet<Integer>(); // TreeSet automatically eliminates
@@ -85,10 +86,10 @@ public class DepartureModel implements Observable {
                 searchResult.add(i);
             }
         }
-        try{
+        try {
             result = searchResult.toArray(new Integer[searchResult.size()]);
-        }catch(Exception e){
-            result = null; 
+        } catch (Exception e) {
+            result = null;
         }
         // return Array of searchResult
         return result;

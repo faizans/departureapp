@@ -119,7 +119,7 @@ public class DetailView extends JPanel {
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
-                System.err.println("DetailView.update aufgerufen");
+                System.err.println("update DetailView.update aufgerufen");
                 DepartureModel myModel = (DepartureModel) m;
                 fldUhrzeit.setText(myModel.getSelectedDeparture().getDepartureTime());
                 fldRichtung.setText(myModel.getSelectedDeparture().getDestination());
@@ -197,25 +197,7 @@ public class DetailView extends JPanel {
 
             }
         });
-        fldGleis.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent evt) {
-                // not used
-            }
-
-            @Override
-            public void keyReleased(KeyEvent arg0) {
-                System.err.println("view.keyReleased aufgerufen");
-                controller.editDeparture(fldGleis.getText(), 3);
-            }
-
-            @Override
-            public void keyPressed(KeyEvent arg0) {
-                // not used
-
-            }
-        });
+        
         areaVia.addKeyListener(new KeyListener() {
 
             @Override
