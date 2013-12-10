@@ -16,6 +16,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.DEPARTURETIME_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.DESTINATION_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.STATUS_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRACK_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRIP_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
+
 public class DepartureModel implements Observable {
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
@@ -36,39 +43,18 @@ public class DepartureModel implements Observable {
 
     // setters
     public void setSelectedDeparture(int i) {
+        System.err.println("Currently selected Departure was changed.");
         this.selectedDeparture = i;
         notifyObservers();
     }
 
-    public void editDeparture(int column, String s) {
+    public void editDeparture(String property, String newValue) {
+        System.err.println("Departure got changed");
         Departure d = departures.get(selectedDeparture);
-        try {
-            switch (column) {
-            case 0:
-                d.setDepartureTime(s);
-                break;
-            case 1:
-                d.setTrip(s);
-                break;
-            case 2:
-                d.setDestination(s);
-                break;
-            case 3:
-                d.setVia(s);
-                break;
-            case 4:
-                d.setTrack(s);
-                break;
-            case 5:
-                d.setStatus(s);
-                break;
-            }
-            System.out.println("Edit Departure New");
-            notifyObservers();
-            notifyRepaintObservers();
-        } catch (Exception e) {
-            System.err.println("editDeparture out of bound.");
-        }
+        d.setProperty(property, newValue);
+        notifyObservers();
+        notifyRepaintObservers();
+
     }
 
     public Integer[] searchDeparture(String s) {
@@ -80,9 +66,11 @@ public class DepartureModel implements Observable {
                                                             // biggest
         for (int i = getIndexSelectedDeparture(); i < departures.size(); i++) {
             Departure d = departures.get(i);
-            if (d.getDepartureTime().toString().contains(s) || d.getDestination().toString().contains(s)
-                    || d.getTrack().toString().contains(s) || d.getTrip().toString().contains(s)
-                    || d.getVia().toString().contains(s)) {
+            if (d.getProperty(DEPARTURETIME_PROPERTY).toString().contains(s)
+                    || d.getProperty(DESTINATION_PROPERTY).toString().contains(s)
+                    || d.getProperty(TRACK_PROPERTY).toString().contains(s)
+                    || d.getProperty(TRIP_PROPERTY).toString().contains(s)
+                    || d.getProperty(VIA_PROPERTY).toString().contains(s)) {
                 searchResult.add(i);
             }
         }
@@ -114,12 +102,6 @@ public class DepartureModel implements Observable {
     private void notifyRepaintObservers() {
         for (Observer observer : observers) {
             observer.repaint(this);
-        }
-    }
-
-    private void searchResultObservers() {
-        for (Observer observer : observers) {
-            observer.searchResult(this);
         }
     }
 
@@ -201,13 +183,13 @@ public class DepartureModel implements Observable {
             String s = "";
             switch (column) {
             case 0:
-                s = firstRow.getDepartureTime().toString();
+                s = firstRow.getProperty(DEPARTURETIME_PROPERTY).toString();
                 break;
             case 1:
-                s = firstRow.getTrip().toString();
+                s = firstRow.getProperty(TRIP_PROPERTY).toString();
                 break;
             case 2:
-                s = firstRow.getDestination().toString();
+                s = firstRow.getProperty(DESTINATION_PROPERTY).toString();
                 break;
             case 3:
                 s = "Status";
@@ -222,16 +204,16 @@ public class DepartureModel implements Observable {
             String s = "";
             switch (column) {
             case 0:
-                s = selectedRow.getDepartureTime().toString();
+                s = selectedRow.getProperty(DEPARTURETIME_PROPERTY).toString();
                 break;
             case 1:
-                s = selectedRow.getTrip().toString();
+                s = selectedRow.getProperty(TRIP_PROPERTY).toString();
                 break;
             case 2:
-                s = selectedRow.getDestination().toString();
+                s = selectedRow.getProperty(DESTINATION_PROPERTY).toString();
                 break;
             case 3:
-                s = selectedRow.getStatus().toString();
+                s = selectedRow.getProperty(STATUS_PROPERTY).toString();
                 break;
             }
             return s;
@@ -239,10 +221,21 @@ public class DepartureModel implements Observable {
 
         @Override
         public void setValueAt(Object value, int row, int column) {
-            System.out.println("trying to change row: " + row);
-            DepartureModel.this.editDeparture(column, value.toString());
+            switch (column) {
+            case 0:
+                DepartureModel.this.editDeparture(DEPARTURETIME_PROPERTY, value.toString());
+                break;
+            case 1:
+                DepartureModel.this.editDeparture(TRIP_PROPERTY, value.toString());
+                break;
+            case 2:
+                DepartureModel.this.editDeparture(DESTINATION_PROPERTY, value.toString());
+                break;
+            case 3:
+                DepartureModel.this.editDeparture(STATUS_PROPERTY, value.toString());
+                break;
+            }
+
         }
-
     }
-
 }

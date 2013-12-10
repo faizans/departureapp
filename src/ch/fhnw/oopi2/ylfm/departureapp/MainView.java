@@ -58,12 +58,6 @@ public class MainView extends JFrame {
                 // TODO Auto-generated method stub
                 
             }
-
-            @Override
-            public void searchResult(Observable model) {
-                // TODO Auto-generated method stub
-                
-            }
         });
 
         // all Events bundled with this view here

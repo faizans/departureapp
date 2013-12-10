@@ -1,6 +1,15 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
+import java.lang.reflect.Field;
+
 public class Departure {
+
+    public static final String DEPARTURETIME_PROPERTY = "departureTime";
+    public static final String TRIP_PROPERTY = "trip";
+    public static final String DESTINATION_PROPERTY = "destination";
+    public static final String VIA_PROPERTY = "via";
+    public static final String TRACK_PROPERTY = "track";
+    public static final String STATUS_PROPERTY = "status";
 
     private String departureTime;
     private String trip;
@@ -18,51 +27,41 @@ public class Departure {
         this.status = status;
     }
 
-    public String getTrip() {
-        return trip;
+    @SuppressWarnings("unchecked")
+    public <T> T getProperty(String propertyName) {
+        return (T) getValue(getField(propertyName));
     }
 
-    public String getTrack() {
-        return track;
+    public void setProperty(String propertyName, Object newValue) {
+        final Field field = getField(propertyName);
+        setValue(field, newValue);
     }
 
-    public String getVia() {
-        return via;
+    private Field getField(String propertyName) {
+        try {
+            return getClass().getDeclaredField(propertyName);
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("unknown field " + propertyName + " in class " + getClass().getName());
+        }
     }
 
-    public String getDestination() {
-        return destination;
+    private Object getValue(Field field) {
+        field.setAccessible(true);
+        try {
+            return field.get(this);
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("can't access value of field " + field + " in class "
+                    + getClass().getName());
+        }
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public String getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setTrip(String s) {
-        this.trip = s;
-    }
-
-    public void setTrack(String s) {
-        this.track = s;
-    }
-
-    public void setVia(String s) {
-        this.via = s;
-    }
-
-    public void setDestination(String s) {
-        this.destination = s;
-    }
-
-    public void setStatus(String s) {
-        this.status = s;
-    }
-
-    public void setDepartureTime(String s) {
-        this.departureTime = s;
+    private void setValue(Field field, Object newValue) {
+        field.setAccessible(true);
+        try {
+            field.set(this, newValue);
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("can't access value of field " + field + " in class "
+                    + getClass().getName());
+        }
     }
 }

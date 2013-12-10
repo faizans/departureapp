@@ -48,26 +48,20 @@ public class TableView {
             @Override
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
-                //used for presenting Search Result
-                try{
+                // used for presenting Search Result
+                try {
                     table.setRowSelectionInterval(myModel.getIndexSelectedDeparture() - 1,
                             myModel.getIndexSelectedDeparture() - 1);
                     table.scrollRectToVisible(table.getCellRect(myModel.getIndexSelectedDeparture() - 1, 0, true));
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
             }
 
             public void repaint(Observable m) {
+                System.out.println("table view repainted");
                 table.updateUI();
-            }
-
-            public void searchResult(Observable m) {
-                DepartureModel myModel = (DepartureModel) m;
-                table.setRowSelectionInterval(myModel.getIndexSelectedDeparture() - 1,
-                        myModel.getIndexSelectedDeparture() - 1);
-                table.scrollRectToVisible(table.getCellRect(myModel.getIndexSelectedDeparture() - 1, 0, true));
             }
         });
         // wenn in der Tabelle eine neue Zeile angewählt wird

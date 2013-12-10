@@ -87,8 +87,14 @@ public class DepartureController {
 
     }
 
-    public void editDeparture(int column, String s) {
-        model.editDeparture(column, s);
+    public void editDeparture(String property, String newValue) {
+        if(model.getSelectedDeparture().getProperty(property).toString().equals(newValue)){
+            //if the property was not changed, nothing happens.
+        } else{
+            model.editDeparture(property, newValue);
+        }
+        
+
     }
 
     public void initializeView() {

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -77,12 +76,6 @@ public class ToolbarView extends JToolBar {
 
             @Override
             public void repaint(Observable model) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void searchResult(Observable model) {
                 // TODO Auto-generated method stub
                 
             }

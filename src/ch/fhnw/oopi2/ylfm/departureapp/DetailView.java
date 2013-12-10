@@ -14,6 +14,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.DEPARTURETIME_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.DESTINATION_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRACK_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRIP_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
+
 public class DetailView extends JPanel {
     private final DepartureModel model;
     private final DepartureController controller;
@@ -119,23 +125,17 @@ public class DetailView extends JPanel {
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
-                System.err.println("update DetailView.update aufgerufen");
+                System.out.println("Detailview repainted");
                 DepartureModel myModel = (DepartureModel) m;
-                fldUhrzeit.setText(myModel.getSelectedDeparture().getDepartureTime());
-                fldRichtung.setText(myModel.getSelectedDeparture().getDestination());
-                fldFahrt.setText(myModel.getSelectedDeparture().getTrip());
-                fldGleis.setText(myModel.getSelectedDeparture().getTrack());
-                areaVia.setText(myModel.getSelectedDeparture().getVia());
+                fldUhrzeit.setText(myModel.getSelectedDeparture().getProperty(DEPARTURETIME_PROPERTY).toString());
+                fldRichtung.setText(myModel.getSelectedDeparture().getProperty(DESTINATION_PROPERTY).toString());
+                fldFahrt.setText(myModel.getSelectedDeparture().getProperty(TRIP_PROPERTY).toString());
+                fldGleis.setText(myModel.getSelectedDeparture().getProperty(TRACK_PROPERTY).toString());
+                areaVia.setText(myModel.getSelectedDeparture().getProperty(VIA_PROPERTY).toString());
             }
 
             @Override
             public void repaint(Observable model) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void searchResult(Observable model) {
                 // TODO Auto-generated method stub
 
             }
@@ -149,7 +149,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                controller.editDeparture(0, fldUhrzeit.getText());
+                controller.editDeparture(DEPARTURETIME_PROPERTY, fldUhrzeit.getText());
             }
 
             @Override
@@ -167,7 +167,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                controller.editDeparture(2, fldRichtung.getText());
+                controller.editDeparture(DESTINATION_PROPERTY, fldRichtung.getText());
             }
 
             @Override
@@ -185,7 +185,26 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                controller.editDeparture(1, fldFahrt.getText());
+                controller.editDeparture(TRIP_PROPERTY, fldFahrt.getText());
+            }
+
+            @Override
+            public void keyPressed(KeyEvent arg0) {
+                // not used
+
+            }
+        });
+        
+        fldGleis.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                // not used
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                controller.editDeparture(TRACK_PROPERTY, fldGleis.getText());
             }
 
             @Override
@@ -204,7 +223,7 @@ public class DetailView extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent arg0) {
-                controller.editDeparture(4, areaVia.getText());
+                controller.editDeparture(VIA_PROPERTY, areaVia.getText());
             }
 
             @Override
