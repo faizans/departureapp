@@ -164,7 +164,7 @@ public class DepartureModel implements Observable {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return true;
+            return  (columnIndex == 3) ? false : true;
         }
 
         @Override
