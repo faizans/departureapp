@@ -47,7 +47,7 @@ public class TableView {
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
-                DepartureModel myModel = (DepartureModel) m;
+                // DepartureModel myModel = (DepartureModel) m;
             }
 
             public void repaint(Observable m) {
@@ -55,11 +55,10 @@ public class TableView {
             }
 
             public void searchResult(Observable m) {
-                table.setRowSelectionInterval(controller.getIndexSelectedDeparture() - 1,
-                        controller.getIndexSelectedDeparture() - 1);
-                table.scrollRectToVisible(table.getCellRect(controller.getIndexSelectedDeparture() - 1, 0, true));
-                // afterwards scroll to visible includes %
-
+                DepartureModel myModel = (DepartureModel) m;
+                table.setRowSelectionInterval(myModel.getIndexSelectedDeparture() - 1,
+                        myModel.getIndexSelectedDeparture() - 1);
+                table.scrollRectToVisible(table.getCellRect(myModel.getIndexSelectedDeparture() - 1, 0, true));
             }
         });
         // wenn in der Tabelle eine neue Zeile angewählt wird
@@ -71,24 +70,25 @@ public class TableView {
             }
         });
         table.addKeyListener(new KeyListener() {
-            //TODO Add Refresh Table after table is edited.
+            // TODO Add Refresh Table after table is edited.
 
             @Override
             public void keyPressed(KeyEvent arg0) {
                 // TODO Auto-generated method stub
-                
+
             }
 
             @Override
             public void keyReleased(KeyEvent arg0) {
                 System.out.println("key released... Detailview should get updated now");
+                // Question is this command MVC-compatible?, führt nur notifyobservers aus...
                 controller.updateDetailView();
             }
 
             @Override
             public void keyTyped(KeyEvent arg0) {
                 // TODO Auto-generated method stub
-                
+
             }
 
         });

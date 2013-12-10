@@ -50,7 +50,7 @@ public class MainView extends JFrame {
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
-                DepartureModel myModel = (DepartureModel) m;
+                //DepartureModel myModel = (DepartureModel) m;
             }
 
             @Override

@@ -15,19 +15,19 @@ public class DepartureController {
     private String previousSearch = "";
     Integer[] searchResult;
 
+    // +++++++++++++++++++++++Local methods
     public int getSearchCounter() {
+        // locally used variable for search functionality
         return searchCounter;
     }
 
-    public int getIndexSelectedDeparture() {
-        return model.getIndexSelectedDeparture();
-    }
-
     public String getPreviousSearch() {
+        // locally used variable for search functionality
         return previousSearch;
     }
 
     public void setPreviousSearch(String s) {
+        // locally used variable for search functionality
         this.previousSearch = s;
     }
 
@@ -48,14 +48,15 @@ public class DepartureController {
         this.table = new TableView(model, this);
     }
 
+    // Question!!!! used to initialize table view
     public JTable getAllDepartures() {
         return new JTable(model.getAllDepartures());
     }
-    
-    public void updateDetailView(){
+
+    public void updateDetailView() {
         model.updateDetailView();
     }
-    
+
     public void searchDeparture(String s) {
         if (s.equals("")) {
             // do nothing as search is empty
@@ -76,13 +77,6 @@ public class DepartureController {
                 }
             }
         }
-    }
-
-    public String getSelectedDeparture(int i) {
-        // returned values from selected Departure
-        Departure d = model.getSelectedDeparture();
-        String[] result = { d.getDepartureTime(), d.getDestination(), d.getTrip(), d.getTrack(), d.getVia() };
-        return result[i];
     }
 
     public void setSelectedDeparture(int i) {

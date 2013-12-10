@@ -14,9 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
-
-public class DetailView extends JPanel{
+public class DetailView extends JPanel {
     private final DepartureModel model;
     private final DepartureController controller;
 
@@ -26,13 +24,13 @@ public class DetailView extends JPanel{
     private JTextField fldUhrzeit, fldRichtung, fldFahrt, fldGleis;
     private JTextArea areaVia;
     private JButton btnEin, btnAus, btnFirstEntry;
-    
+
     public DetailView(DepartureModel model, DepartureController controller) {
         super();
         this.model = model;
         this.controller = controller;
     }
-    
+
     public JPanel createAndShow() {
         initializeComponents();
         JPanel panel = layoutComponents();
@@ -60,13 +58,13 @@ public class DetailView extends JPanel{
     }
 
     private JPanel layoutComponents() {
-        //layout single components
+        // layout single components
         panel.setMinimumSize(new Dimension(300, 400));
         panel.setPreferredSize(new Dimension(300, 400));
         panel.setLayout(new GridBagLayout());
-        areaVia.setWrapStyleWord(true); //newline only after word end
-        areaVia.setLineWrap(true); //enable wrapping
-        //put gridbag together - layout left labels
+        areaVia.setWrapStyleWord(true); // newline only after word end
+        areaVia.setLineWrap(true); // enable wrapping
+        // put gridbag together - layout left labels
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -84,7 +82,7 @@ public class DetailView extends JPanel{
         panel.add(lblVia, c);
         c.gridy = 5;
         panel.add(btnEin, c);
-        //layout right fields
+        // layout right fields
         c.anchor = GridBagConstraints.FIRST_LINE_END;
         c.weightx = 1.0;
         c.gridx = 1;
@@ -101,7 +99,7 @@ public class DetailView extends JPanel{
         c.gridy = 4;
         c.weighty = 1.0;
         panel.add(areaVia, c);
-        //layout buttons
+        // layout buttons
         c.fill = GridBagConstraints.NONE;
         c.weighty = 0;
         c.gridwidth = 1;
@@ -123,23 +121,23 @@ public class DetailView extends JPanel{
             public void update(Observable m) {
                 System.err.println("DetailView.update aufgerufen");
                 DepartureModel myModel = (DepartureModel) m;
-                fldUhrzeit.setText(controller.getSelectedDeparture(0));
-                fldRichtung.setText(controller.getSelectedDeparture(1));
-                fldFahrt.setText(controller.getSelectedDeparture(2)); 
-                fldGleis.setText(controller.getSelectedDeparture(3));
-                areaVia.setText(controller.getSelectedDeparture(4));
+                fldUhrzeit.setText(myModel.getSelectedDeparture().getDepartureTime());
+                fldRichtung.setText(myModel.getSelectedDeparture().getDestination());
+                fldFahrt.setText(myModel.getSelectedDeparture().getTrip());
+                fldGleis.setText(myModel.getSelectedDeparture().getTrack());
+                areaVia.setText(myModel.getSelectedDeparture().getVia());
             }
 
             @Override
             public void repaint(Observable model) {
                 // TODO Auto-generated method stub
-                
+
             }
 
             @Override
             public void searchResult(Observable model) {
                 // TODO Auto-generated method stub
-                
+
             }
         });
         fldUhrzeit.addKeyListener(new KeyListener() {
