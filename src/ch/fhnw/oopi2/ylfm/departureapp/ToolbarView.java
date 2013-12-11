@@ -1,10 +1,7 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.net.URL;
 
 import javax.swing.Box;
@@ -115,6 +112,16 @@ public class ToolbarView extends JToolBar {
             }
         });
 
+        home.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    controller.showBoard();
+                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    controller.hideBoard();
+                }
+            }
+        });
         // all Events bundled with this view here
 
     }

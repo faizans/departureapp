@@ -10,6 +10,8 @@ public class DepartureController {
     private final ToolbarView toolbar;
     private final DetailView detail;
     private final TableView table;
+    private final DepartureBoardView departureBoard;
+
     // how often the same string got searched for
     private int searchCounter = 0;
     private String previousSearch = "";
@@ -33,7 +35,7 @@ public class DepartureController {
 
     public void increaseSearchCounter() {
         // locally used variable for search functionality
-        // array out of bounds exception abfangen durch kürzen des Arrays
+        // array out of bounds exception abfangen durch kï¿½rzen des Arrays
         this.searchCounter = (this.getSearchCounter() + 1) % searchResult.length;
     }
 
@@ -48,6 +50,7 @@ public class DepartureController {
         this.toolbar = new ToolbarView(model, this);
         this.detail = new DetailView(model, this);
         this.table = new TableView(model, this);
+        this.departureBoard = new DepartureBoardView();
     }
 
     // getters QUESTION!!! does that comply with MVC-Pattern?
@@ -79,7 +82,7 @@ public class DepartureController {
     }
 
     public void setSelectedDeparture(int i) {
-        // test ob geändert
+        // test ob geï¿½ndert
         if (model.getIndexSelectedDeparture() != i) {
             model.setSelectedDeparture(i);
         } else {
@@ -112,7 +115,17 @@ public class DepartureController {
                 splitPane.setOneTouchExpandable(true);
                 mainview.add(splitPane, BorderLayout.CENTER);
                 mainview.pack();
+                departureBoard.createAndShow();
             }
         });
+    }
+
+    public void showBoard() {
+        departureBoard.setVisible(true);
+    }
+
+
+    public void hideBoard() {
+        departureBoard.setVisible(false);
     }
 }
