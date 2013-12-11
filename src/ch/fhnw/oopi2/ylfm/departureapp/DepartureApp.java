@@ -1,7 +1,5 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
-import javax.swing.SwingUtilities;
-
 import com.alee.laf.WebLookAndFeel;
 
 public class DepartureApp {

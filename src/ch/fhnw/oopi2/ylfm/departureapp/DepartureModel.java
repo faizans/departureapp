@@ -159,6 +159,7 @@ public class DepartureModel implements Observable {
 
     public class FileAdapter extends AbstractTableModel {
 
+        private static final long serialVersionUID = 1L;
         private List<Departure> departure;
         private int rowCount;
 

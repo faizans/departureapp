@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainView extends JFrame {
+    private static final long serialVersionUID = 1L;
     private final DepartureModel model;
     private final DepartureController controller;
 

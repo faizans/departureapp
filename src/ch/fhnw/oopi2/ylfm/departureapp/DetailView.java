@@ -21,6 +21,8 @@ import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRIP_PROPERTY;
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
 
 public class DetailView extends JPanel {
+
+    private static final long serialVersionUID = 1L;
     private final DepartureModel model;
     private final DepartureController controller;
 
