@@ -24,10 +24,16 @@ import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRIP_PROPERTY;
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
 
 public class DepartureModel implements Observable {
+
     public static final String FILE_NAME = "olten.txt";
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
-    private int selectedDeparture = -1;
+    private int selectedDeparture = +1;//bug or FEATURE... somehow a positive selected Departure at starttime helps...
+
+    // undo/redo stuff
+    private boolean isInputValid = true;
+    private boolean isUndoAvailable = false;
+    private boolean isRedoAvailable = false;
 
     // getters
     public AbstractTableModel getAllDepartures() {
@@ -48,22 +54,7 @@ public class DepartureModel implements Observable {
 
     }
 
-    // setters
-    public void setSelectedDeparture(int i) {
-        System.err.println("Currently selected Departure was changed.");
-        this.selectedDeparture = i;
-        notifyObservers();
-    }
-
-    public void editDeparture(String property, String newValue) {
-        System.err.println("Departure got changed");
-        Departure d = departures.get(selectedDeparture);
-        d.setProperty(property, newValue);
-        notifyObservers();
-        notifyRepaintObservers();
-
-    }
-
+    // technically also a getter
     public Integer[] searchDeparture(String s) {
         // returns null, if s was not found within departures
         Integer[] result;
@@ -88,6 +79,59 @@ public class DepartureModel implements Observable {
         }
         // return Array of searchResult
         return result;
+    }
+
+    // setters
+    public void setSelectedDeparture(int i) {
+        System.err.println("Currently selected Departure was changed.");
+        this.selectedDeparture = i;
+        notifyObservers();
+    }
+
+    public void editDeparture(String property, String value) {
+        System.err.println("Departure got changed");
+        Departure d = departures.get(selectedDeparture);
+        d.setProperty(property, value);
+        notifyObservers();
+        notifyRepaintObservers();
+
+    }
+
+    // undo/redo stuff ------------------------------------------
+    public boolean isInputValid() {
+        return isInputValid;
+    }
+
+    public void setInputValid(boolean inputValid) {
+        if (isInputValid == inputValid) {
+            return;
+        }
+        isInputValid = inputValid;
+        notifyObservers();
+    }
+
+    public boolean isUndoAvailable() {
+        return isUndoAvailable;
+    }
+
+    public void setUndoAvailable(boolean undoAvailable) {
+        if (isUndoAvailable == undoAvailable) {
+            return;
+        }
+        isUndoAvailable = undoAvailable;
+        notifyObservers();
+    }
+
+    public boolean isRedoAvailable() {
+        return isRedoAvailable;
+    }
+
+    public void setRedoAvailable(boolean redoAvailable) {
+        if (isRedoAvailable == redoAvailable) {
+            return;
+        }
+        isRedoAvailable = redoAvailable;
+        notifyObservers();
     }
 
     @Override

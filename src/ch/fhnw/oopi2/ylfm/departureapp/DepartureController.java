@@ -1,6 +1,8 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import java.awt.BorderLayout;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import javax.swing.*;
 
@@ -11,6 +13,10 @@ public class DepartureController {
     private final DetailView detail;
     private final TableView table;
     private final DepartureBoardView departureBoard;
+
+    // undo/redo stuff
+    private final Deque<ICommand> undoStack = new ArrayDeque<>();
+    private final Deque<ICommand> redoStack = new ArrayDeque<>();
 
     // how often the same string got searched for
     private int searchCounter = 0;
@@ -64,16 +70,16 @@ public class DepartureController {
         } else {
             if (getPreviousSearch().equals(s) && this.getSearchCounter() != 0) {
                 // gleiche Suche wie vorher
-                model.setSelectedDeparture(searchResult[getSearchCounter()]);
                 increaseSearchCounter();
+                setSelectedDeparture(searchResult[getSearchCounter()]);
             } else {
                 // neue Suche
                 resetSearchCounter();
                 searchResult = model.searchDeparture(s);
                 try {
-                    model.setSelectedDeparture(searchResult[getSearchCounter()]);
                     setPreviousSearch(s);
                     increaseSearchCounter();
+                    setSelectedDeparture(searchResult[getSearchCounter()]);
                 } catch (Exception e) {
                     // do nothing, because s was not found within departures.
                 }
@@ -82,13 +88,51 @@ public class DepartureController {
     }
 
     public void setSelectedDeparture(int i) {
-        // test ob geï¿½ndert
-        if (model.getIndexSelectedDeparture() != i) {
-            model.setSelectedDeparture(i);
-        } else {
-            // no changes to apply
+        try {
+            setSelectedDepartureUndoRedo(i);
+        } catch (Exception e) {
+            model.setInputValid(false);
+            undoStack.clear();
+            redoStack.clear();
+            setUndoRedoStatus();
         }
+    }
 
+    public void undo() {
+        if (undoStack.isEmpty()) {
+            System.out.println("nothing to undo, stack is empty");
+            return;
+        }
+        ICommand cmd = undoStack.pop();
+        redoStack.push(cmd);
+        setUndoRedoStatus();
+        System.err.println("undo ausgeführt");
+        cmd.undo();
+    }
+
+    public void redo() {
+        if (redoStack.isEmpty()) {
+            System.out.println("redostack is empty");
+            return;
+        }
+        ICommand cmd = redoStack.pop();
+        undoStack.push(cmd);
+        setUndoRedoStatus();
+        System.err.println("redo ausgeführt");
+        cmd.execute();
+    }
+
+    private void setSelectedDepartureUndoRedo(int newValue) {
+        if (model.getIndexSelectedDeparture() != newValue) {
+            execute(new SetSelectedDepartureCommand(model, newValue));
+        }
+    }
+
+    private void execute(ICommand cmd) {
+        undoStack.push(cmd);
+        redoStack.clear();
+        setUndoRedoStatus();
+        cmd.execute();
     }
 
     public void editDeparture(String property, String newValue) {
@@ -99,7 +143,11 @@ public class DepartureController {
         } else {
             model.editDeparture(property, newValue);
         }
+    }
 
+    private void setUndoRedoStatus() {
+        model.setRedoAvailable(!redoStack.isEmpty());
+        model.setUndoAvailable(!undoStack.isEmpty());
     }
 
     public void initializeView() {
@@ -123,7 +171,6 @@ public class DepartureController {
     public void showBoard() {
         departureBoard.setVisible(true);
     }
-
 
     public void hideBoard() {
         departureBoard.setVisible(false);
