@@ -98,6 +98,29 @@ public class DepartureController {
         }
     }
 
+    private void setSelectedDepartureUndoRedo(int newValue) {
+        if (model.getIndexSelectedDeparture() != newValue) {
+            execute(new SetSelectedDepartureCommand(model, newValue));
+        }
+    }
+
+    public void editDeparture(String property, String newValue) {
+        try {
+            editDepartureUndoRedo(property, newValue);
+        } catch (Exception e) {
+            model.setInputValid(false);
+            undoStack.clear();
+            redoStack.clear();
+            setUndoRedoStatus();
+        }
+    }
+
+    public void editDepartureUndoRedo(String property, String newValue) {
+        if (!model.getSelectedDeparture().getProperty(property).toString().equals(newValue)) {
+            execute(new EditDepartureCommand(model, property, newValue));
+        }
+    }
+
     public void undo() {
         if (undoStack.isEmpty()) {
             System.out.println("nothing to undo, stack is empty");
@@ -122,27 +145,11 @@ public class DepartureController {
         cmd.execute();
     }
 
-    private void setSelectedDepartureUndoRedo(int newValue) {
-        if (model.getIndexSelectedDeparture() != newValue) {
-            execute(new SetSelectedDepartureCommand(model, newValue));
-        }
-    }
-
     private void execute(ICommand cmd) {
         undoStack.push(cmd);
         redoStack.clear();
         setUndoRedoStatus();
         cmd.execute();
-    }
-
-    public void editDeparture(String property, String newValue) {
-        System.out.println();
-        if (model.getIndexSelectedDeparture() == -1
-                || model.getSelectedDeparture().getProperty(property).toString().equals(newValue)) {
-            // when no row is selected or the value has not changed
-        } else {
-            model.editDeparture(property, newValue);
-        }
     }
 
     private void setUndoRedoStatus() {
