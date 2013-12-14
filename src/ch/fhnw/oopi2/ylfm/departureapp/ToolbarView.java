@@ -79,13 +79,7 @@ public class ToolbarView extends JToolBar {
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
                 undo.setEnabled(myModel.isUndoAvailable());
-                if(!myModel.isUndoAvailable()){
-                    redo.requestFocus();
-                }
                 redo.setEnabled(myModel.isRedoAvailable());
-                if(!myModel.isRedoAvailable()){
-                    undo.requestFocus();
-                }
             }
 
             @Override
