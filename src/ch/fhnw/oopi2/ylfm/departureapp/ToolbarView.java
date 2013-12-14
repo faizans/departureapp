@@ -15,6 +15,7 @@ import javax.swing.JToolBar;
 import programmierprojektYvesLauber.DepartureView;
 
 public class ToolbarView extends JToolBar {
+    public static final String SEARCH_TEXT = "Suche ...";
     private static final long serialVersionUID = 1L;
     private final DepartureModel model;
     private final DepartureController controller;
@@ -67,6 +68,8 @@ public class ToolbarView extends JToolBar {
         search.setMinimumSize(new Dimension(60, 28));
         search.setText("Suche ...");
         toolbar.add(search);
+        undo.setEnabled(false);
+        redo.setEnabled(false);
         return toolbar;
     }
 
@@ -75,6 +78,14 @@ public class ToolbarView extends JToolBar {
             @Override
             public void update(Observable m) {
                 DepartureModel myModel = (DepartureModel) m;
+                undo.setEnabled(myModel.isUndoAvailable());
+                if(!myModel.isUndoAvailable()){
+                    redo.requestFocus();
+                }
+                redo.setEnabled(myModel.isRedoAvailable());
+                if(!myModel.isRedoAvailable()){
+                    undo.requestFocus();
+                }
             }
 
             @Override
@@ -88,13 +99,14 @@ public class ToolbarView extends JToolBar {
 
             @Override
             public void focusLost(FocusEvent arg0) {
-                // TODO Auto-generated method stub
-
+                if(search.getText().equals("")){
+                    search.setText(SEARCH_TEXT);
+                }
             }
 
             @Override
             public void focusGained(FocusEvent arg0) {
-                if (search.getText().equals("Suche ...")) {
+                if (search.getText().equals(SEARCH_TEXT)) {
                     search.setText("");
                 } else {
                     controller.resetSearchCounter();
