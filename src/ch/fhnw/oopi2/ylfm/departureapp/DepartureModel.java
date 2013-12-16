@@ -1,5 +1,6 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
+import javax.sound.midi.ControllerEventListener;
 import javax.swing.table.AbstractTableModel;
 
 import java.io.BufferedReader;
@@ -339,6 +340,7 @@ public class DepartureModel implements Observable {
         public void setValueAt(Object value, int row, int column) {
             switch (column) {
             case 0:
+                System.out.println("edit from table");
                 DepartureModel.this.editDeparture(DEPARTURETIME_PROPERTY, value.toString());
                 break;
             case 1:

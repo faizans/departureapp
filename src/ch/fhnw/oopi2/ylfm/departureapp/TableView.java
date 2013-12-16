@@ -6,6 +6,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
 
 public class TableView {
     private final DepartureModel model;
@@ -59,10 +60,14 @@ public class TableView {
 
             public void repaint(Observable m) {
                 System.out.println("table view repainted");
-                table.updateUI();
+                //table.updateUI();
+                DepartureModel departureModel = (DepartureModel) m;
+                int rowToUpdate = departureModel.getIndexSelectedDeparture() - 1;
+                AbstractTableModel tableModel = (AbstractTableModel) table.getModel();
+                tableModel.fireTableRowsUpdated(rowToUpdate, rowToUpdate);
             }
         });
-        // wenn in der Tabelle eine neue Zeile angew‰hlt wird
+        // wenn in der Tabelle eine neue Zeile angew√§hlt wird
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
