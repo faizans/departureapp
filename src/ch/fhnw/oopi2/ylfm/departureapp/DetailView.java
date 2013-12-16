@@ -264,7 +264,7 @@ public class DetailView extends JPanel {
         btnEin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.blinkOutgoing();
+                controller.updateBoardIncoming();
             }
         });
 

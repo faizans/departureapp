@@ -25,6 +25,7 @@ public class DepartureController {
     Integer[] searchResult;
 
     // departureboard variables
+    int[] indexBoard;
     private boolean boardUpdated;
     private final DepartureBoardView departureBoard;
     int firstBoardIndex;
@@ -216,45 +217,58 @@ public class DepartureController {
         if (departureBoard.isVisible()) {
             departureBoard.clearBoard();
 
-            int row = 0;
-            int index = model.getIndexSelectedDeparture();
-
-            setFirstBoardIndex(index);
-
-            int rowLimit = 4;
+            int rowLimit = 5;
             int newLimit = model.getAllDepartures().getRowCount() - model.getIndexSelectedDeparture();
 
             if (newLimit < rowLimit) {
-                rowLimit = newLimit;
+                rowLimit = newLimit + 1;
             }
 
-            while (row <= rowLimit) {
-                Departure departure = model.getDeparture(index++);
-                if (departure != null) {
-                    departureBoard.updateBoardRow(row++, departure);
+            int boardindex = model.getIndexSelectedDeparture();
+            int counter = 0;
+            indexBoard = new int[rowLimit];
+            while (indexBoard[indexBoard.length - 1] == 0) { // wenn array noch nicht gefüllt
+                                                             // wurde...
+                Departure departure = model.getDeparture(boardindex); // ###
+                if (departure.getProperty(STATUS_PROPERTY).equals("abgefahren")) {
+                    System.out.println("selected departure abgefahren");
+                } else {
+                    indexBoard[counter] = boardindex;
+                    counter++;
                 }
+                boardindex++;
             }
 
-            setLastBoardIndex(index);
+            for (int i = 0; i < rowLimit; i++) {
+                departureBoard.updateBoardRow(i, model.getDeparture(indexBoard[i]));
+                System.out.println("departureboard printed line " + i);
+            }
             boardUpdated = true;
+            blinkOutgoing();
         }
     }
 
     public void blinkOutgoing() {
-        // calculation
-        int row = model.getIndexSelectedDeparture() - getFirstBoardIndex();
-
-        if (row >= 0 && row < 5) {
-            departureBoard.setBlinking(row);
+        for (int i = 0; i < indexBoard.length; i++) {
+            if (model.getDeparture(indexBoard[i]).getProperty(STATUS_PROPERTY).equals(ENTRY_TEXT)) {
+                departureBoard.setBlinking(i);
+                System.out.println("departure " + indexBoard[i] + " is blinking");
+            }
         }
+    }
+
+    public void updateBoardIncoming() {
         editDeparture(STATUS_PROPERTY, ENTRY_TEXT);
+        if (departureBoard.isVisible()) {
+            blinkOutgoing();
+        }
     }
 
     public void updateBoardOutgoing() {
         editDeparture(STATUS_PROPERTY, EXIT_TEXT);
         if (departureBoard.isVisible() && boardUpdated) {
             departureBoard.clearBoard();
-            model.setSelectedDeparture(model.getIndexSelectedDeparture() + 1);
+            model.setSelectedDeparture(indexBoard[0]);
             updateBoard();
         }
     }
