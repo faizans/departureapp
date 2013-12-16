@@ -1,13 +1,14 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import java.awt.Dimension;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.*;
 import java.net.URL;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
@@ -35,6 +36,8 @@ public class ToolbarView extends JToolBar {
         super();
         this.model = model;
         this.controller = controller;
+        KeyboardFocusManager keymanager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        keymanager.addKeyEventDispatcher(new MyDispatcher());
     }
 
     public JToolBar createAndShow() {
@@ -70,6 +73,8 @@ public class ToolbarView extends JToolBar {
         toolbar.add(search);
         undo.setEnabled(false);
         redo.setEnabled(false);
+        undo.setToolTipText("CTRL + Z");
+        redo.setToolTipText("CTRL + Y");
         return toolbar;
     }
 
@@ -80,6 +85,7 @@ public class ToolbarView extends JToolBar {
                 DepartureModel myModel = (DepartureModel) m;
                 undo.setEnabled(myModel.isUndoAvailable());
                 redo.setEnabled(myModel.isRedoAvailable());
+                undo.setToolTipText("Search");
             }
 
             @Override
@@ -146,8 +152,30 @@ public class ToolbarView extends JToolBar {
 
             }
         });
+
         // all Events bundled with this view here
 
+    }
+
+    private class MyDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+                if (e.isControlDown() && e.getKeyChar() != 'y' && e.getKeyCode() == 89) {
+                    System.out.println("ctrl + y - redo");
+                    controller.redo();
+                }
+                if (e.isControlDown() && e.getKeyChar() != 'z' && e.getKeyCode() == 90) {
+                    System.out.println("ctrl + z - undo");
+                    controller.undo();
+                }
+            } else if (e.getID() == KeyEvent.KEY_TYPED) {
+
+            }
+            return false;
+        }
     }
 
     public static ImageIcon createImageIcon(Class callingClass, String path, String... description) {
