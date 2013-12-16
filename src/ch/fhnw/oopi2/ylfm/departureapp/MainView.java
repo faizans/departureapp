@@ -47,17 +47,20 @@ public class MainView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                JFileChooser chooser = new JFileChooser();
-                int returnVal = chooser.showSaveDialog(frame);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("test");
-                    File outputFile;
-                    outputFile = chooser.getSelectedFile();
-                    controller.saveChanges(outputFile.getAbsolutePath());
+                int close = JOptionPane.showConfirmDialog(null, "Do you want to save your edited Departures?", "Close",
+                        JOptionPane.YES_NO_OPTION);
+                if (close == JOptionPane.YES_OPTION) {
+                    JFileChooser chooser = new JFileChooser();
+                    int returnVal = chooser.showSaveDialog(frame);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        System.out.println("test");
+                        File outputFile;
+                        outputFile = chooser.getSelectedFile();
+                        controller.saveChanges(outputFile.getAbsolutePath());
+                    }
+                } else {
+                    System.exit(0);
                 }
-
-                System.exit(0);
-
             }
         });
         model.addObserver(new Observer() {

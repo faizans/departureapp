@@ -215,10 +215,11 @@ public class DepartureModel implements Observable {
     }
 
     public void saveChanges(String fileName) {
-        FileOutputStream fos;
+        FileOutputStream fos = null;
+        BufferedWriter bw = null;
         try {
             fos = new FileOutputStream(fileName);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
             for (Departure d : departures) {
                 bw.append(d.getProperty(DEPARTURETIME_PROPERTY) + ";" + d.getProperty(TRIP_PROPERTY) + ";"
                         + d.getProperty(DESTINATION_PROPERTY) + ";" + d.getProperty(VIA_PROPERTY) + ";"
@@ -229,6 +230,23 @@ public class DepartureModel implements Observable {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error occured during flush");
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            if (bw != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
