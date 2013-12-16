@@ -1,10 +1,10 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
-
-import javax.swing.*;
 
 public class DepartureController {
     private final DepartureModel model;
@@ -12,6 +12,8 @@ public class DepartureController {
     private final ToolbarView toolbar;
     private final DetailView detail;
     private final TableView table;
+
+    private final DepartureBoardModel departureBoardModel;
     private final DepartureBoardView departureBoard;
 
     // undo/redo stuff
@@ -22,6 +24,7 @@ public class DepartureController {
     private int searchCounter = 0;
     private String previousSearch = "";
     Integer[] searchResult;
+    private boolean boardUpdated;
 
     // +++++++++++++++++++++++Local methods
     public int getSearchCounter() {
@@ -52,11 +55,12 @@ public class DepartureController {
 
     public DepartureController(DepartureModel model) {
         this.model = model;
+        this.departureBoardModel = new DepartureBoardModel();
         this.mainview = new MainView(model, this);
         this.toolbar = new ToolbarView(model, this);
         this.detail = new DetailView(model, this);
         this.table = new TableView(model, this);
-        this.departureBoard = new DepartureBoardView();
+        this.departureBoard = new DepartureBoardView(departureBoardModel, this);
     }
 
     // getters QUESTION!!! does that comply with MVC-Pattern?
@@ -129,7 +133,7 @@ public class DepartureController {
         ICommand cmd = undoStack.pop();
         redoStack.push(cmd);
         setUndoRedoStatus();
-        System.err.println("undo ausgeführt");
+        System.err.println("undo ausgefÃ¼hrt");
         cmd.undo();
     }
 
@@ -141,7 +145,7 @@ public class DepartureController {
         ICommand cmd = redoStack.pop();
         undoStack.push(cmd);
         setUndoRedoStatus();
-        System.err.println("redo ausgeführt");
+        System.err.println("redo ausgefÃ¼hrt");
         cmd.execute();
     }
 
@@ -175,11 +179,36 @@ public class DepartureController {
         });
     }
 
+    // board actions
+
     public void showBoard() {
         departureBoard.setVisible(true);
     }
 
     public void hideBoard() {
         departureBoard.setVisible(false);
+    }
+
+    public void updateBoard() {
+        if (departureBoard.isVisible()) {
+
+            int row = 0;
+            int index = model.getIndexSelectedDeparture();
+
+            while (row < 5) {
+                Departure departure = model.getDeparture(index++);
+                if (departure != null) {
+                    departureBoard.updateBoardRow(row++, departure);
+                }
+            }
+            boardUpdated = true;
+        }
+    }
+
+    public void updateBoardOutgoing() {
+        if (departureBoard.isVisible() && boardUpdated) {
+            model.setSelectedDeparture(model.getIndexSelectedDeparture()+5);
+            updateBoard();
+        }
     }
 }

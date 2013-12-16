@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -232,6 +234,20 @@ public class DetailView extends JPanel {
             public void keyPressed(KeyEvent arg0) {
                 // not used
 
+            }
+        });
+
+        btnFirstEntry.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.updateBoard();
+            }
+        });
+
+        btnAus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.updateBoardOutgoing();
             }
         });
 

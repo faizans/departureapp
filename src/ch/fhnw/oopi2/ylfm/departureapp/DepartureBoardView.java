@@ -2,6 +2,7 @@ package ch.fhnw.oopi2.ylfm.departureapp;
 
 import ch.fhnw.oopi2.ylfm.playground.splitflap.board.ControlPanel;
 import ch.fhnw.oopi2.ylfm.playground.splitflap.board.DepartureBoard;
+import ch.fhnw.oopi2.ylfm.playground.splitflap.board.Row;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +17,16 @@ public class DepartureBoardView extends JFrame {
     DepartureBoard board;
     ControlPanel controlPanel;
 
-    public DepartureBoardView() {
+    DepartureBoardModel model;
+    DepartureController controller;
+
+    public DepartureBoardView(DepartureBoardModel model, DepartureController controller) {
         // TODO: refactor to addEvents
         board = new DepartureBoard();
         controlPanel = new ControlPanel();
+        this.model = model;
+        this.controller = controller;
+
         ControlPanel.ControlEventListener listener = new ControlPanel.ControlEventListener() {
             public void controlEventPerformed(ControlPanel.ControlEvent event) {
                 board.getRows().get(event.getRowIndex()).setBlinking(event.isBlink());
@@ -65,7 +72,34 @@ public class DepartureBoardView extends JFrame {
         this.setSize(870, 355);
         this.setBackground(Color.BLACK);
         this.setLocationRelativeTo(null);
-//        this.setVisible(true);
         return this;
+    }
+
+    public void updateBoardRow(int index, Departure departure) {
+        Row row = board.getRows().get(index);
+
+        int hour = Integer.parseInt(departure.getProperty("departureTime").toString().split(":")[0]);
+        int minute =Integer.parseInt(departure.getProperty("departureTime").toString().split(":")[1]);
+
+        row.setHour(hour);
+        row.setMinute(minute);
+        row.setTrack((String)departure.getProperty("track"));
+        row.setDestination((String)departure.getProperty("destination"));
+    }
+
+    private void addEvents() {
+        model.addObserver(
+                new Observer() {
+                    @Override
+                    public void update(Observable model) {
+                        System.out.println("departureModelUpdated");
+                    }
+
+                    @Override
+                    public void repaint(Observable model) {
+                        //To change body of implemented methods use File | Settings | File Templates.
+                    }
+                }
+        );
     }
 }

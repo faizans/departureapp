@@ -54,6 +54,15 @@ public class DepartureModel implements Observable {
 
     }
 
+    public Departure getDeparture(int index) {
+        try {
+            return departures.get(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     // technically also a getter
     public Integer[] searchDeparture(String s) {
         // returns null, if s was not found within departures
