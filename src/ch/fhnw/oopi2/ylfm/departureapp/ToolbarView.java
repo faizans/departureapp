@@ -93,7 +93,7 @@ public class ToolbarView extends JToolBar {
 
             @Override
             public void focusLost(FocusEvent arg0) {
-                if(search.getText().equals("")){
+                if (search.getText().equals("")) {
                     search.setText(SEARCH_TEXT);
                 }
             }
@@ -128,22 +128,22 @@ public class ToolbarView extends JToolBar {
                 }
             }
         });
-        
+
         undo.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.undo();
-                
+
             }
         });
-        
+
         redo.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.redo();
-                
+
             }
         });
         // all Events bundled with this view here

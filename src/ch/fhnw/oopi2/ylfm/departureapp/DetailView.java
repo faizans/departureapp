@@ -21,12 +21,16 @@ import static ch.fhnw.oopi2.ylfm.departureapp.Departure.DESTINATION_PROPERTY;
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRACK_PROPERTY;
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.TRIP_PROPERTY;
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.STATUS_PROPERTY;
 
 public class DetailView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private final DepartureModel model;
     private final DepartureController controller;
+    public static final String DEFAULT_TEXT = "hat Einfahrt";
+    public static final String EXIT_TEXT = "abgefahren";
+    public static final String ENTRY_TEXT = "im Bahnhof";
 
     // declaration of all elements
     private JPanel panel;
@@ -122,6 +126,9 @@ public class DetailView extends JPanel {
         c.gridy = 6;
         c.insets = new Insets(10, 15, 10, 15);
         panel.add(btnFirstEntry, c);
+        btnAus.setEnabled(false);
+        btnEin.setEnabled(false);
+        btnFirstEntry.setEnabled(false);
         return panel;
     }
 
@@ -136,6 +143,9 @@ public class DetailView extends JPanel {
                 fldFahrt.setText(myModel.getSelectedDeparture().getProperty(TRIP_PROPERTY).toString());
                 fldGleis.setText(myModel.getSelectedDeparture().getProperty(TRACK_PROPERTY).toString());
                 areaVia.setText(myModel.getSelectedDeparture().getProperty(VIA_PROPERTY).toString());
+                btnFirstEntry.setEnabled(myModel.isBoardShowStatus());
+                btnEin.setEnabled(myModel.getSelectedDeparture().getProperty(STATUS_PROPERTY).equals(DEFAULT_TEXT)?true:false);
+                btnAus.setEnabled(myModel.getSelectedDeparture().getProperty(STATUS_PROPERTY).equals(ENTRY_TEXT)?true:false);
             }
 
             @Override
@@ -198,7 +208,7 @@ public class DetailView extends JPanel {
 
             }
         });
-        
+
         fldGleis.addKeyListener(new KeyListener() {
 
             @Override

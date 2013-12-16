@@ -1,9 +1,12 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+import static ch.fhnw.oopi2.ylfm.departureapp.Departure.STATUS_PROPERTY;
 
 public class DepartureController {
     private final DepartureModel model;
@@ -26,6 +29,8 @@ public class DepartureController {
     private final DepartureBoardView departureBoard;
     int firstBoardIndex;
     int lastBoardIndex;
+    public static final String EXIT_TEXT = "abgefahren";
+    public static final String ENTRY_TEXT = "im Bahnhof";
 
     public int getLastBoardIndex() {
         return lastBoardIndex;
@@ -42,7 +47,6 @@ public class DepartureController {
     public void setFirstBoardIndex(int firstBoardIndex) {
         this.firstBoardIndex = firstBoardIndex;
     }
-
 
     // +++++++++++++++++++++++Local methods
     public int getSearchCounter() {
@@ -200,10 +204,12 @@ public class DepartureController {
 
     public void showBoard() {
         departureBoard.setVisible(true);
+        model.setBoardShowStatus(true);
     }
 
     public void hideBoard() {
         departureBoard.setVisible(false);
+        model.setBoardShowStatus(false);
     }
 
     public void updateBoard() {
@@ -241,9 +247,11 @@ public class DepartureController {
         if (row >= 0 && row < 5) {
             departureBoard.setBlinking(row);
         }
+        editDeparture(STATUS_PROPERTY, ENTRY_TEXT);
     }
 
     public void updateBoardOutgoing() {
+        editDeparture(STATUS_PROPERTY, EXIT_TEXT);
         if (departureBoard.isVisible() && boardUpdated) {
             departureBoard.clearBoard();
             model.setSelectedDeparture(model.getIndexSelectedDeparture() + 1);

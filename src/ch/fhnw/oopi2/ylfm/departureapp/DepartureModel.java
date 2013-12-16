@@ -26,14 +26,21 @@ import static ch.fhnw.oopi2.ylfm.departureapp.Departure.VIA_PROPERTY;
 public class DepartureModel implements Observable {
 
     public static final String FILE_NAME = "olten.txt";
+    public static final String DEFAULT_TEXT = "abgefahren";
+    public static final String EXIT_TEXT = "abgefahren";
+    public static final String ENTRY_TEXT = "im Bahnhof";
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
-    private int selectedDeparture = +1;//bug or FEATURE... somehow a positive selected Departure at starttime helps...
+    private int selectedDeparture = +1;// bug or FEATURE... somehow a positive selected Departure at
+                                       // starttime helps...
 
     // undo/redo stuff
     private boolean isInputValid = true;
     private boolean isUndoAvailable = false;
     private boolean isRedoAvailable = false;
+
+    // departureboads visual stuff
+    private boolean boardShowStatus = false;
 
     // getters
     public AbstractTableModel getAllDepartures() {
@@ -209,6 +216,15 @@ public class DepartureModel implements Observable {
         final URL resource = DepartureModel.class.getResource(FILE_NAME);
         file = new File(URLDecoder.decode(resource.getFile()));
         return file;
+    }
+
+    public boolean isBoardShowStatus() {
+        return boardShowStatus;
+    }
+
+    public void setBoardShowStatus(boolean boardShowStatus) {
+        this.boardShowStatus = boardShowStatus;
+        notifyObservers();
     }
 
     public class FileAdapter extends AbstractTableModel {
