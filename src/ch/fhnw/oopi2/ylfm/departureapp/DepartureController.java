@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 
 import static ch.fhnw.oopi2.ylfm.departureapp.Departure.STATUS_PROPERTY;
@@ -25,7 +26,7 @@ public class DepartureController {
     Integer[] searchResult;
 
     // departureboard variables
-    int[] indexBoard;
+    ArrayList<Integer> showableDepartures;
     private boolean boardUpdated;
     private final DepartureBoardView departureBoard;
     int firstBoardIndex;
@@ -217,42 +218,40 @@ public class DepartureController {
         if (departureBoard.isVisible()) {
             departureBoard.clearBoard();
 
-            int rowLimit = 5;
-            int newLimit = model.getAllDepartures().getRowCount() - model.getIndexSelectedDeparture();
-
-            if (newLimit < rowLimit) {
-                rowLimit = newLimit + 1;
-            }
-
-            int boardindex = model.getIndexSelectedDeparture();
+            showableDepartures = new ArrayList<Integer>();
+            int index = model.getIndexSelectedDeparture();
             int counter = 0;
-            indexBoard = new int[rowLimit];
-            while (indexBoard[indexBoard.length - 1] == 0) { // wenn array noch nicht gefüllt
-                                                             // wurde...
-                Departure departure = model.getDeparture(boardindex); // ###
+            while (counter<5) {
+                Departure departure = model.getDeparture(index); // ###
                 if (departure.getProperty(STATUS_PROPERTY).equals("abgefahren")) {
-                    System.out.println("selected departure abgefahren");
+                    System.out.println("departure " + index + " ist schon abgefahren");
                 } else {
-                    indexBoard[counter] = boardindex;
+                    showableDepartures.add(index);
                     counter++;
                 }
-                boardindex++;
+                index++;
+                if (index > model.getAllDepartures().getRowCount()) {
+                    counter = 5;
+                }
             }
 
-            for (int i = 0; i < rowLimit; i++) {
-                departureBoard.updateBoardRow(i, model.getDeparture(indexBoard[i]));
-                System.out.println("departureboard printed line " + i);
+            int rowcounter = 0;
+            for (Integer row : showableDepartures) {
+                System.out.println("Departure to Show: " + row);
+                departureBoard.updateBoardRow(rowcounter, model.getDeparture(row));
+                rowcounter++;
             }
+
             boardUpdated = true;
             blinkOutgoing();
         }
     }
 
     public void blinkOutgoing() {
-        for (int i = 0; i < indexBoard.length; i++) {
-            if (model.getDeparture(indexBoard[i]).getProperty(STATUS_PROPERTY).equals(ENTRY_TEXT)) {
+        for (int i = 0; i < showableDepartures.size(); i++) {
+            if (model.getDeparture(showableDepartures.get(i)).getProperty(STATUS_PROPERTY).equals(ENTRY_TEXT)) {
                 departureBoard.setBlinking(i);
-                System.out.println("departure " + indexBoard[i] + " is blinking");
+                System.out.println("departure " + showableDepartures.get(i) + " is blinking");
             }
         }
     }
@@ -266,9 +265,9 @@ public class DepartureController {
 
     public void updateBoardOutgoing() {
         editDeparture(STATUS_PROPERTY, EXIT_TEXT);
-        if (departureBoard.isVisible() && boardUpdated) {
+        if (departureBoard.isVisible()) {
             departureBoard.clearBoard();
-            model.setSelectedDeparture(indexBoard[0]);
+            model.setSelectedDeparture(showableDepartures.get(0));
             updateBoard();
         }
     }
