@@ -246,7 +246,7 @@ public class DepartureController {
     public void updateBoardOutgoing() {
         if (departureBoard.isVisible() && boardUpdated) {
             departureBoard.clearBoard();
-            model.setSelectedDeparture(model.getIndexSelectedDeparture() + 5);
+            model.setSelectedDeparture(model.getIndexSelectedDeparture() + 1);
             updateBoard();
         }
     }
