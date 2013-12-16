@@ -143,7 +143,7 @@ public class DetailView extends JPanel {
                 fldFahrt.setText(myModel.getSelectedDeparture().getProperty(TRIP_PROPERTY).toString());
                 fldGleis.setText(myModel.getSelectedDeparture().getProperty(TRACK_PROPERTY).toString());
                 areaVia.setText(myModel.getSelectedDeparture().getProperty(VIA_PROPERTY).toString());
-                btnFirstEntry.setEnabled(myModel.isBoardShowStatus());
+                btnFirstEntry.setEnabled(myModel.isBoardShowStatus() && myModel.getSelectedDeparture().getProperty(STATUS_PROPERTY).equals(EXIT_TEXT)?false:true);
                 btnEin.setEnabled(myModel.getSelectedDeparture().getProperty(STATUS_PROPERTY).equals(DEFAULT_TEXT)?true:false);
                 btnAus.setEnabled(myModel.getSelectedDeparture().getProperty(STATUS_PROPERTY).equals(ENTRY_TEXT)?true:false);
             }

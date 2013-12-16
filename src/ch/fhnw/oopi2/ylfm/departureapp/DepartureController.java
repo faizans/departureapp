@@ -27,28 +27,9 @@ public class DepartureController {
 
     // departureboard variables
     ArrayList<Integer> showableDepartures;
-    private boolean boardUpdated;
     private final DepartureBoardView departureBoard;
-    int firstBoardIndex;
-    int lastBoardIndex;
     public static final String EXIT_TEXT = "abgefahren";
     public static final String ENTRY_TEXT = "im Bahnhof";
-
-    public int getLastBoardIndex() {
-        return lastBoardIndex;
-    }
-
-    public void setLastBoardIndex(int lastBoardIndex) {
-        this.lastBoardIndex = lastBoardIndex;
-    }
-
-    public int getFirstBoardIndex() {
-        return firstBoardIndex;
-    }
-
-    public void setFirstBoardIndex(int firstBoardIndex) {
-        this.firstBoardIndex = firstBoardIndex;
-    }
 
     // +++++++++++++++++++++++Local methods
     public int getSearchCounter() {
@@ -221,7 +202,7 @@ public class DepartureController {
             showableDepartures = new ArrayList<Integer>();
             int index = model.getIndexSelectedDeparture();
             int counter = 0;
-            while (counter<5) {
+            while (counter < 5) {
                 Departure departure = model.getDeparture(index); // ###
                 if (departure.getProperty(STATUS_PROPERTY).equals("abgefahren")) {
                     System.out.println("departure " + index + " ist schon abgefahren");
@@ -234,15 +215,12 @@ public class DepartureController {
                     counter = 5;
                 }
             }
-
             int rowcounter = 0;
             for (Integer row : showableDepartures) {
                 System.out.println("Departure to Show: " + row);
                 departureBoard.updateBoardRow(rowcounter, model.getDeparture(row));
                 rowcounter++;
             }
-
-            boardUpdated = true;
             blinkOutgoing();
         }
     }
