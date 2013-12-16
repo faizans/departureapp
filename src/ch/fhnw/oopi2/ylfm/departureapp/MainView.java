@@ -76,7 +76,6 @@ public class MainView extends JFrame {
             }
         });
 
-
         // all Events bundled with this view here
 
     }

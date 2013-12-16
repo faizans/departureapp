@@ -60,7 +60,7 @@ public class TableView {
 
             public void repaint(Observable m) {
                 System.out.println("table view repainted");
-                //table.updateUI();
+                // table.updateUI();
                 DepartureModel departureModel = (DepartureModel) m;
                 int rowToUpdate = departureModel.getIndexSelectedDeparture() - 1;
                 AbstractTableModel tableModel = (AbstractTableModel) table.getModel();

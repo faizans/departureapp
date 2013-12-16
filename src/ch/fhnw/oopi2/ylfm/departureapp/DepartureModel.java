@@ -1,6 +1,5 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.table.AbstractTableModel;
 
 import java.io.BufferedReader;
@@ -42,6 +41,7 @@ public class DepartureModel implements Observable {
     private boolean isInputValid = true;
     private boolean isUndoAvailable = false;
     private boolean isRedoAvailable = false;
+    private boolean isEditorEnabled = false;
 
     // departureboads visual stuff
     private boolean boardShowStatus = false;
@@ -109,12 +109,27 @@ public class DepartureModel implements Observable {
     }
 
     public void editDeparture(String property, String value) {
-        System.err.println("Departure got changed");
-        Departure d = departures.get(selectedDeparture);
-        d.setProperty(property, value);
-        notifyObservers();
-        notifyRepaintObservers();
+        // test ensures, that upon first edit those settings are not enabled. (Covers GUI
+        // enable/disable Editor)
+        if (isEditorEnabled) {
+            System.err.println("Departure got changed");
+            Departure d = departures.get(selectedDeparture);
+            d.setProperty(property, value);
+            notifyObservers();
+            notifyRepaintObservers();
+        }
+        if (!isEditorEnabled()) {
+            setEditorEnabled();
+        }
 
+    }
+
+    private boolean isEditorEnabled() {
+        return isEditorEnabled;
+    }
+
+    public void setEditorEnabled() {
+        isEditorEnabled = true;
     }
 
     // undo/redo stuff ------------------------------------------
