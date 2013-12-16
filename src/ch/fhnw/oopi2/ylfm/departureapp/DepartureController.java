@@ -1,7 +1,6 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -13,9 +12,6 @@ public class DepartureController {
     private final DetailView detail;
     private final TableView table;
 
-    private final DepartureBoardModel departureBoardModel;
-    private final DepartureBoardView departureBoard;
-
     // undo/redo stuff
     private final Deque<ICommand> undoStack = new ArrayDeque<>();
     private final Deque<ICommand> redoStack = new ArrayDeque<>();
@@ -24,7 +20,29 @@ public class DepartureController {
     private int searchCounter = 0;
     private String previousSearch = "";
     Integer[] searchResult;
+
+    // departureboard variables
     private boolean boardUpdated;
+    private final DepartureBoardView departureBoard;
+    int firstBoardIndex;
+    int lastBoardIndex;
+
+    public int getLastBoardIndex() {
+        return lastBoardIndex;
+    }
+
+    public void setLastBoardIndex(int lastBoardIndex) {
+        this.lastBoardIndex = lastBoardIndex;
+    }
+
+    public int getFirstBoardIndex() {
+        return firstBoardIndex;
+    }
+
+    public void setFirstBoardIndex(int firstBoardIndex) {
+        this.firstBoardIndex = firstBoardIndex;
+    }
+
 
     // +++++++++++++++++++++++Local methods
     public int getSearchCounter() {
@@ -55,12 +73,11 @@ public class DepartureController {
 
     public DepartureController(DepartureModel model) {
         this.model = model;
-        this.departureBoardModel = new DepartureBoardModel();
         this.mainview = new MainView(model, this);
         this.toolbar = new ToolbarView(model, this);
         this.detail = new DetailView(model, this);
         this.table = new TableView(model, this);
-        this.departureBoard = new DepartureBoardView(departureBoardModel, this);
+        this.departureBoard = new DepartureBoardView(this);
     }
 
     // getters QUESTION!!! does that comply with MVC-Pattern?
@@ -191,23 +208,45 @@ public class DepartureController {
 
     public void updateBoard() {
         if (departureBoard.isVisible()) {
+            departureBoard.clearBoard();
 
             int row = 0;
             int index = model.getIndexSelectedDeparture();
 
-            while (row < 5) {
+            setFirstBoardIndex(index);
+
+            int rowLimit = 4;
+            int newLimit = model.getAllDepartures().getRowCount() - model.getIndexSelectedDeparture();
+
+            if (newLimit < rowLimit) {
+                rowLimit = newLimit;
+            }
+
+            while (row <= rowLimit) {
                 Departure departure = model.getDeparture(index++);
                 if (departure != null) {
                     departureBoard.updateBoardRow(row++, departure);
                 }
             }
+
+            setLastBoardIndex(index);
             boardUpdated = true;
+        }
+    }
+
+    public void blinkOutgoing() {
+        // calculation
+        int row = model.getIndexSelectedDeparture() - getFirstBoardIndex();
+
+        if (row >= 0 && row < 5) {
+            departureBoard.setBlinking(row);
         }
     }
 
     public void updateBoardOutgoing() {
         if (departureBoard.isVisible() && boardUpdated) {
-            model.setSelectedDeparture(model.getIndexSelectedDeparture()+5);
+            departureBoard.clearBoard();
+            model.setSelectedDeparture(model.getIndexSelectedDeparture() + 5);
             updateBoard();
         }
     }

@@ -5,6 +5,7 @@ import ch.fhnw.oopi2.ylfm.playground.splitflap.board.DepartureBoard;
 import ch.fhnw.oopi2.ylfm.playground.splitflap.board.Row;
 
 import javax.swing.*;
+import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 
 /**
@@ -17,14 +18,12 @@ public class DepartureBoardView extends JFrame {
     DepartureBoard board;
     ControlPanel controlPanel;
 
-    DepartureBoardModel model;
     DepartureController controller;
 
-    public DepartureBoardView(DepartureBoardModel model, DepartureController controller) {
+    public DepartureBoardView(DepartureController controller) {
         // TODO: refactor to addEvents
         board = new DepartureBoard();
         controlPanel = new ControlPanel();
-        this.model = model;
         this.controller = controller;
 
         ControlPanel.ControlEventListener listener = new ControlPanel.ControlEventListener() {
@@ -75,8 +74,18 @@ public class DepartureBoardView extends JFrame {
         return this;
     }
 
-    public void updateBoardRow(int index, Departure departure) {
-        Row row = board.getRows().get(index);
+    public void clearBoard() {
+        for(Row row : board.getRows()) {
+            row.setBlinking(false);
+            row.setHour(0);
+            row.setMinute(0);
+            row.setTrack("");
+            row.setDestination("");
+        }
+    }
+
+    public void updateBoardRow(int rowIndex, Departure departure) {
+        Row row = board.getRows().get(rowIndex);
 
         int hour = Integer.parseInt(departure.getProperty("departureTime").toString().split(":")[0]);
         int minute =Integer.parseInt(departure.getProperty("departureTime").toString().split(":")[1]);
@@ -87,19 +96,9 @@ public class DepartureBoardView extends JFrame {
         row.setDestination((String)departure.getProperty("destination"));
     }
 
-    private void addEvents() {
-        model.addObserver(
-                new Observer() {
-                    @Override
-                    public void update(Observable model) {
-                        System.out.println("departureModelUpdated");
-                    }
+    public void setBlinking(int rowIndex) {
+        Row row = board.getRows().get(rowIndex);
 
-                    @Override
-                    public void repaint(Observable model) {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-                }
-        );
+        row.setBlinking(true);
     }
 }

@@ -251,6 +251,13 @@ public class DetailView extends JPanel {
             }
         });
 
+        btnEin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.blinkOutgoing();
+            }
+        });
+
         // all Events bundled with this view here
 
     }
