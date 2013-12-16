@@ -1,9 +1,11 @@
 package ch.fhnw.oopi2.ylfm.departureapp;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 public class MainView extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -45,19 +47,29 @@ public class MainView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                int returnVal = chooser.showSaveDialog(frame);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("test");
+                    File outputFile;
+                    outputFile = chooser.getSelectedFile();
+                    controller.saveChanges(outputFile.getAbsolutePath());
+                }
+
                 System.exit(0);
+
             }
         });
         model.addObserver(new Observer() {
             @Override
             public void update(Observable m) {
-                //DepartureModel myModel = (DepartureModel) m;
+                // DepartureModel myModel = (DepartureModel) m;
             }
 
             @Override
             public void repaint(Observable model) {
                 // TODO Auto-generated method stub
-                
+
             }
         });
 

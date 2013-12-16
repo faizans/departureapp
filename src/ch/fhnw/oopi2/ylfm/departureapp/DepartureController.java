@@ -164,6 +164,11 @@ public class DepartureController {
         model.setRedoAvailable(!redoStack.isEmpty());
         model.setUndoAvailable(!undoStack.isEmpty());
     }
+    
+    public void saveChanges(String filename) {
+        model.saveChanges(filename);
+        System.out.println("controller.saveChanges");
+    }
 
     public void initializeView() {
         SwingUtilities.invokeLater(new Runnable() {

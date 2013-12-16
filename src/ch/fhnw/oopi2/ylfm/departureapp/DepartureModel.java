@@ -3,11 +3,14 @@ package ch.fhnw.oopi2.ylfm.departureapp;
 import javax.swing.table.AbstractTableModel;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -209,6 +212,24 @@ public class DepartureModel implements Observable {
             }
         }
         return departureList;
+    }
+
+    public void saveChanges(String fileName) {
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(fileName);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            for (Departure d : departures) {
+                bw.append(d.getProperty(DEPARTURETIME_PROPERTY) + ";" + d.getProperty(TRIP_PROPERTY) + ";"
+                        + d.getProperty(DESTINATION_PROPERTY) + ";" + d.getProperty(VIA_PROPERTY) + ";"
+                        + d.getProperty(TRACK_PROPERTY) + ";\r\n");
+            }
+            bw.flush();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error occured during flush");
+        }
     }
 
     private final File getFile() {
