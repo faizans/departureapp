@@ -48,8 +48,9 @@ public class DepartureBoardView extends JFrame {
 
     private void initComponents() {
         setTitle("Swing Departure Board");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
 
         GridBagLayout layout = new GridBagLayout();
         getContentPane().setLayout(layout);
