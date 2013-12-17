@@ -83,7 +83,6 @@ public class ToolbarView extends JToolBar {
                 DepartureModel myModel = (DepartureModel) m;
                 undo.setEnabled(myModel.isUndoAvailable());
                 redo.setEnabled(myModel.isRedoAvailable());
-                undo.setToolTipText("Search");
             }
 
             @Override

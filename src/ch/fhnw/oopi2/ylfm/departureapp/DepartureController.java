@@ -78,8 +78,8 @@ public class DepartureController {
         } else {
             if (getPreviousSearch().equals(s) && this.getSearchCounter() != 0) {
                 // gleiche Suche wie vorher
-                increaseSearchCounter();
                 setSelectedDeparture(searchResult[getSearchCounter()]);
+                increaseSearchCounter();
             } else {
                 // neue Suche
                 resetSearchCounter();
