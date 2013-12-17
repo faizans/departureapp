@@ -13,8 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import programmierprojektYvesLauber.DepartureView;
-
 public class ToolbarView extends JToolBar {
     public static final String SEARCH_TEXT = "Suche ...";
     private static final long serialVersionUID = 1L;
@@ -27,10 +25,10 @@ public class ToolbarView extends JToolBar {
     private JButton undo;
     private JButton redo;
     private JTextField search;
-    final ImageIcon imgHomeOn = createImageIcon(DepartureView.class, "on.png");
-    final ImageIcon imgHomeOff = createImageIcon(DepartureView.class, "off.png");
-    final ImageIcon imgRedo = createImageIcon(DepartureView.class, "redo-icon.png");
-    final ImageIcon imgUndo = createImageIcon(DepartureView.class, "undo-icon.png");
+    final ImageIcon imgHomeOn = createImageIcon(ToolbarView.class, "on.png");
+    final ImageIcon imgHomeOff = createImageIcon(ToolbarView.class, "off.png");
+    final ImageIcon imgRedo = createImageIcon(ToolbarView.class, "redo-icon.png");
+    final ImageIcon imgUndo = createImageIcon(ToolbarView.class, "undo-icon.png");
 
     public ToolbarView(DepartureModel model, DepartureController controller) {
         super();

@@ -31,6 +31,7 @@ public class TableView {
     private void initializeComponents() {
         // initialization here
         table = controller.getAllDepartures();
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         scrollPane = new JScrollPane(table);
     }
 
