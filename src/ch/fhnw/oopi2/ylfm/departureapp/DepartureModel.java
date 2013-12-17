@@ -34,8 +34,7 @@ public class DepartureModel implements Observable {
     public static final String ENTRY_TEXT = "im Bahnhof";
     private final Set<Observer> observers = new HashSet<>();
     private List<Departure> departures = createList();
-    private int selectedDeparture = +1;// bug or FEATURE... somehow a positive selected Departure at
-                                       // starttime helps...
+    private int selectedDeparture = 1;
 
     // undo/redo stuff
     private boolean isInputValid = true;

@@ -86,8 +86,8 @@ public class DepartureController {
                 searchResult = model.searchDeparture(s);
                 try {
                     setPreviousSearch(s);
-                    increaseSearchCounter();
                     setSelectedDeparture(searchResult[getSearchCounter()]);
+                    increaseSearchCounter();
                 } catch (Exception e) {
                     // do nothing, because s was not found within departures.
                 }
@@ -164,7 +164,7 @@ public class DepartureController {
         model.setRedoAvailable(!redoStack.isEmpty());
         model.setUndoAvailable(!undoStack.isEmpty());
     }
-    
+
     public void saveChanges(String filename) {
         model.saveChanges(filename);
         System.out.println("controller.saveChanges");
